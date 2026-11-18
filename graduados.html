@@ -1,94 +1,41 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Consulta el registro institucional de graduados de Educa Digital.">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07152f">
+  <meta name="description" content="Consulta el listado público de graduados de Educa Digital.">
   <title>Graduados | Educa Digital</title>
-  <link rel="icon" href="img/logo.png">
-  <link rel="stylesheet" href="estilos.css">
-  <link rel="stylesheet" href="graduados.css">
+  <style>
+    :root{--navy:#07152f;--navy2:#0b2045;--cyan:#27d9f2;--blue:#2589ff;--pink:#ec4bbd;--white:#f7fbff;--muted:#bdcce0;--line:rgba(160,205,255,.18)}
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 15% 0%,rgba(37,137,255,.19),transparent 38%),radial-gradient(ellipse at 90% 85%,rgba(236,75,189,.11),transparent 35%),var(--navy);color:var(--white);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;padding:48px 18px}
+    .wrap{width:min(100%,1050px);margin:auto}.brand{display:flex;align-items:center;gap:10px;color:var(--cyan);font-weight:800;letter-spacing:.12em;text-transform:uppercase;font-size:.78rem}.brand-mark{width:11px;height:11px;border-radius:50%;background:var(--cyan);box-shadow:0 0 18px var(--cyan)}h1{font-size:clamp(2rem,5vw,3.4rem);margin:18px 0 8px;letter-spacing:-.045em}.sub{color:var(--muted);margin:0 0 30px;font-size:1rem}.panel{background:linear-gradient(145deg,rgba(17,42,82,.88),rgba(8,25,54,.94));border:1px solid var(--line);border-radius:22px;padding:clamp(16px,3vw,28px);box-shadow:0 20px 60px rgba(0,0,0,.25)}.filter{display:block;width:100%;height:50px;padding:0 16px;border:1px solid rgba(39,217,242,.35);border-radius:12px;background:rgba(3,14,34,.72);color:var(--white);font:inherit;outline:none;margin-bottom:20px}.filter:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(39,217,242,.12)}.table-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:13px}table{width:100%;border-collapse:collapse;min-width:640px;text-align:left}thead{background:rgba(39,217,242,.09)}th{font-size:.76rem;letter-spacing:.09em;color:var(--cyan);padding:16px 18px;font-weight:800}td{padding:16px 18px;border-top:1px solid var(--line);color:#eaf4ff;font-size:.94rem}tbody tr:hover{background:rgba(37,137,255,.07)}td:first-child{font-weight:800;color:var(--cyan);white-space:nowrap}.empty{text-align:center;color:var(--muted);padding:28px}.pagination{display:flex;align-items:center;justify-content:center;gap:18px;margin:20px 0 0}.page-btn{width:42px;height:42px;border-radius:12px;border:1px solid var(--line);background:rgba(37,137,255,.12);color:var(--white);font-size:1.25rem;cursor:pointer}.page-btn:hover:not(:disabled){border-color:var(--cyan);color:var(--cyan)}.page-btn:disabled{opacity:.3;cursor:not-allowed}.page-info{color:var(--muted);font-size:.9rem;min-width:105px;text-align:center}.foot{text-align:center;color:#8298b8;font-size:.82rem;margin-top:25px}.status{color:var(--muted);font-size:.88rem;margin-top:14px;min-height:1.2em}
+    @media(max-width:600px){body{padding:30px 12px}.panel{border-radius:17px}.pagination{gap:14px}}
+  </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="index.html" aria-label="Educa Digital, inicio">
-        <img src="img/logo.png" alt="Educa Digital" class="brand-logo">
-        <span>Educa Digital</span>
-      </a>
-      <nav class="main-nav" aria-label="Navegación principal">
-        <a href="index.html">Inicio</a>
-        <a href="index.html#quienes-somos">Quiénes somos</a>
-        <a href="index.html#curso">El curso</a>
-        <a href="index.html#que-aprenderas">Qué aprenderás</a>
-        <a href="graduados.html" aria-current="page">Graduados</a>
+  <main class="wrap">
+    <div class="brand"><span class="brand-mark"></span> Educa Digital</div>
+    <h1>Graduados</h1>
+    <p class="sub">Consulta el registro de graduados de Educa Digital.</p>
+    <section class="panel" aria-label="Listado de graduados">
+      <label for="filtro-codigo" style="position:absolute;left:-9999px">Filtrar por código de graduado</label>
+      <input id="filtro-codigo" class="filter" type="search" maxlength="20" placeholder="Buscar por código de graduado…" autocomplete="off">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>CÓDIGO</th><th>APELLIDO</th><th>NOMBRE</th><th>FECHA DE GRADUACIÓN</th></tr></thead>
+          <tbody id="lista-graduados"><tr><td class="empty" colspan="4">Cargando graduados…</td></tr></tbody>
+        </table>
+      </div>
+      <nav class="pagination" aria-label="Paginación">
+        <button class="page-btn" id="pagina-anterior" type="button" aria-label="Página anterior" disabled>‹</button>
+        <span class="page-info" id="pagina-info">Página 1 de 1</span>
+        <button class="page-btn" id="pagina-siguiente" type="button" aria-label="Página siguiente" disabled>›</button>
       </nav>
-      <a class="header-contact" href="https://wa.me/543794576062" target="_blank" rel="noopener">Consultar</a>
-    </div>
-  </header>
-
-  <main>
-    <section class="graduados-hero">
-      <div class="container">
-        <p class="eyebrow">EDUCA DIGITAL · REGISTRO INSTITUCIONAL</p>
-        <h1>Nuestros <span>Graduados</span></h1>
-        <p>Reconocemos el esfuerzo, la dedicación y el compromiso de quienes completaron su formación en computación junto a Educa Digital.</p>
-      </div>
+      <div class="status" id="estado-listado" role="status" aria-live="polite"></div>
     </section>
-
-    <section class="graduados-section">
-      <div class="container">
-        <div class="graduados-heading">
-          <p class="eyebrow">Registro institucional</p>
-          <h2>Listado de graduados</h2>
-          <p>Consulta los registros de las personas que finalizaron nuestro curso.</p>
-        </div>
-
-        <div class="graduados-tools">
-          <label class="sr-only" for="buscar-graduado">Buscar graduado</label>
-          <input id="buscar-graduado" type="search" maxlength="10"
-                 placeholder="Buscar por código, apellido o nombre..." autocomplete="off">
-          <button id="limpiar-busqueda" type="button" aria-label="Limpiar búsqueda" disabled>✕</button>
-        </div>
-
-        <p id="total-graduados" class="graduados-total" aria-live="polite">Cargando registros…</p>
-        <p id="estado-firebase" class="graduados-status" role="status" aria-live="polite"></p>
-
-        <div class="graduados-table-wrap">
-          <table id="graduados-table" class="graduados-table">
-            <thead>
-              <tr>
-                <th scope="col">Código</th>
-                <th scope="col">Apellido</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Expedición</th>
-              </tr>
-            </thead>
-            <tbody id="graduados-lista">
-              <tr><td colspan="4" class="graduados-empty">Cargando graduados…</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="graduados-pagination" aria-label="Paginación">
-          <button id="pagina-anterior" type="button" disabled>← Anterior</button>
-          <span id="pagina-info">Página 1 de 1</span><span id="pagina-actual" hidden>1</span>
-          <button id="pagina-siguiente" type="button" disabled>Siguiente →</button>
-        </div>
-      </div>
-    </section>
+    <footer class="foot">© <span id="year"></span> Educa Digital</footer>
   </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <p>© <span id="year">2026</span> Educa Digital. Todos los derechos reservados.</p>
-      <p>Aprende Computación Desde Casa</p>
-    </div>
-  </footer>
-
-  <a class="whatsapp-float" href="https://wa.me/543794576062" target="_blank" rel="noopener"
-     aria-label="Consultar por WhatsApp">WhatsApp</a>
-
-  <script type="module" src="graduados.js"></script>
+  <script type="module" src="carga.js"></script>
 </body>
 </html>
