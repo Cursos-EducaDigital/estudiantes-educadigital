@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Panel privado de administración de graduados de Educa Digital.">
+  <title>Administración de graduados | Educa Digital</title>
+  <link rel="icon" href="img/logo.png">
+  <link rel="stylesheet" href="carga.css">
+</head>
+<body>
+  <main class="admin-shell">
+    <header class="admin-header">
+      <a class="brand" href="index.html">
+        <img src="img/logo.png" alt="Educa Digital">
+        <span>Educa Digital</span>
+      </a>
+      <span class="private-label"><span class="status-dot"></span> Panel privado</span>
+    </header>
+
+    <section id="login-panel" class="login-card">
+      <div class="eyebrow">ADMINISTRACIÓN</div>
+      <h1>Acceso al panel</h1>
+      <p class="intro">Inicia sesión para administrar el registro institucional de graduados.</p>
+      <form id="login-form">
+        <label for="admin-email">Correo electrónico</label>
+        <input id="admin-email" name="email" type="email" autocomplete="username" required placeholder="Tu correo de administrador">
+        <label for="admin-password">Contraseña</label>
+        <input id="admin-password" name="password" type="password" autocomplete="current-password" required placeholder="Contraseña">
+        <button class="button primary full" type="submit" id="login-button">Iniciar sesión</button>
+      </form>
+      <p id="login-message" class="feedback" role="status" aria-live="polite"></p>
+      <p class="small-note">El acceso se valida mediante Firebase Authentication.</p>
+    </section>
+
+    <section id="admin-panel" class="admin-panel" hidden>
+      <div class="panel-heading">
+        <div>
+          <div class="eyebrow">GESTIÓN INSTITUCIONAL</div>
+          <h1>Graduados</h1>
+          <p class="intro">Agrega, modifica y administra los registros publicados en la página.</p>
+        </div>
+        <button id="logout-button" class="button secondary" type="button">Cerrar sesión</button>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-card">
+          <span class="stat-label">Graduados registrados</span>
+          <strong id="total-registros">—</strong>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Estado de conexión</span>
+          <strong id="connection-state">Conectando…</strong>
+        </div>
+      </div>
+
+      <div id="migration-notice" class="notice" hidden>
+        <div>
+          <strong>Importación inicial disponible</strong>
+          <p>Se pueden incorporar los 16 registros originales. Los códigos que ya existan no se duplicarán ni se sobrescribirán.</p>
+        </div>
+        <button id="import-button" class="button primary" type="button">Comprobar e importar registros</button>
+      </div>
+
+      <div class="workspace">
+        <section class="form-card">
+          <div class="section-title">
+            <div>
+              <div class="eyebrow">REGISTRO</div>
+              <h2 id="form-title">Agregar graduado</h2>
+            </div>
+            <span id="edit-indicator" class="edit-indicator" hidden>Editando</span>
+          </div>
+
+          <form id="graduate-form">
+            <input id="record-id" type="hidden">
+            <label for="codigo">Código de graduado</label>
+            <input id="codigo" name="codigo" type="text" maxlength="20" required placeholder="Ej. ED-00017">
+
+            <label for="apellido">Apellido</label>
+            <input id="apellido" name="apellido" type="text" maxlength="60" required placeholder="Apellido">
+
+            <label for="nombre">Nombre</label>
+            <input id="nombre" name="nombre" type="text" maxlength="60" required placeholder="Nombre">
+
+            <label for="expedicion">Expedición (mes y año)</label>
+            <input id="expedicion" name="expedicion" type="text" maxlength="40" required placeholder="Ej. Noviembre 2026">
+
+            <div class="form-actions">
+              <button id="save-button" class="button primary" type="submit">Guardar graduado</button>
+              <button id="cancel-edit" class="button secondary" type="button" hidden>Cancelar</button>
+            </div>
+          </form>
+          <p id="form-message" class="feedback" role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="list-card">
+          <div class="section-title list-heading">
+            <div>
+              <div class="eyebrow">BASE DE DATOS</div>
+              <h2>Registros existentes</h2>
+            </div>
+            <a href="graduados.html" target="_blank" rel="noopener" class="public-link">Ver página pública ↗</a>
+          </div>
+
+          <label class="sr-only" for="filter-records">Buscar registros</label>
+          <input id="filter-records" class="filter-input" type="search" placeholder="Buscar por código, apellido o nombre…" autocomplete="off">
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Apellido y nombre</th>
+                  <th>Expedición</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="admin-records">
+                <tr><td colspan="4" class="empty-cell">Inicia sesión para consultar los registros.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="table-help">Los cambios guardados aquí se reflejan en la página pública conectada a Firestore.</p>
+        </section>
+      </div>
+      <p id="global-message" class="feedback global-feedback" role="status" aria-live="polite"></p>
+    </section>
+
+    <footer class="admin-footer">Educa Digital · Aprende Computación Desde Casa</footer>
+  </main>
+
+  <script type="module" src="carga.js"></script>
+</body>
+</html>
