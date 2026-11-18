@@ -87,20 +87,17 @@
     <section class="carga-publicacion">
       <div>
         <h2>Actualizar listado público</h2>
-        <p>Descargue el archivo actualizado y reemplace <strong>graduados.js</strong> en el repositorio de GitHub para publicar los cambios.</p>
+        <p>Guarde todos los cambios directamente en GitHub. El sitio público se actualizará automáticamente cuando Vercel complete el despliegue.</p>
       </div>
-      <button type="button" class="boton-principal" id="descargar-datos" disabled>Descargar graduados.js actualizado</button>
-      <p class="nota-publicacion" id="estado-publicacion" aria-live="polite">La descarga se habilitará al conectar la gestión de registros.</p>
+      <button type="button" class="boton-principal" id="descargar-datos" disabled>Guardar y publicar cambios</button>
+      <p class="nota-publicacion" id="estado-publicacion" aria-live="polite">Los cambios se guardarán directamente en GitHub y se publicarán automáticamente.</p>
     </section>
 
     <footer class="carga-footer"><span>EDUCA DIGITAL</span><a href="graduados.html">Ver listado público</a></footer>
   </main>
 
   <script>
-    // Bloqueo visual para una web estática. No constituye autenticación segura:
-    // la contraseña puede descubrirse inspeccionando el código fuente.
     (() => {
-      const CLAVE = "1409";
       const bloqueo = document.getElementById("bloqueo-acceso");
       const formulario = document.getElementById("formulario-acceso");
       const campo = document.getElementById("contrasena-acceso");
@@ -112,33 +109,63 @@
         panel.hidden = true;
         campo.value = "";
         error.textContent = "";
-        setTimeout(() => campo.focus(), 0);
       }
 
-      formulario.addEventListener("submit", (e) => {
-        e.preventDefault();
-        if (campo.value === CLAVE) {
+      formulario.addEventListener("submit", async (evento) => {
+        evento.preventDefault();
+        error.textContent = "";
+        const boton = formulario.querySelector('button[type="submit"]');
+        boton.disabled = true;
+        boton.textContent = "VERIFICANDO...";
+
+        try {
+          const respuesta = await fetch("/api/guardar-graduados", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "same-origin",
+            body: JSON.stringify({ action: "login", password: campo.value })
+          });
+          const resultado = await respuesta.json().catch(() => ({}));
+
+          if (!respuesta.ok) {
+            throw new Error(resultado.error || "No se pudo verificar el acceso.");
+          }
+
           bloqueo.hidden = true;
           panel.hidden = false;
           campo.value = "";
-          error.textContent = "";
-        } else {
-          error.textContent = "La contraseña ingresada no es correcta.";
+        } catch (errorAcceso) {
+          error.textContent = errorAcceso.message || "La contraseña no es correcta.";
           campo.value = "";
           campo.focus();
+        } finally {
+          boton.disabled = false;
+          boton.textContent = "INGRESAR";
         }
       });
 
-      document.getElementById("cerrar-sesion").addEventListener("click", bloquear);
+      document.getElementById("cerrar-sesion").addEventListener("click", async () => {
+        try {
+          await fetch("/api/guardar-graduados", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "same-origin",
+            body: JSON.stringify({ action: "logout" })
+          });
+        } finally {
+          bloquear();
+        }
+      });
 
-      document.addEventListener("keydown", (e) => {
-        if (!bloqueo.hidden && e.key === "Escape") {
-          e.preventDefault();
-          e.stopPropagation();
+      document.addEventListener("keydown", (evento) => {
+        if (!bloqueo.hidden && evento.key === "Escape") {
+          evento.preventDefault();
+          evento.stopPropagation();
           campo.focus();
         }
       }, true);
     })();
   </script>
+  <script src="graduados.js"></script>
 </body>
 </html>
