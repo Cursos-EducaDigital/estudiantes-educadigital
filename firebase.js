@@ -1,16 +1,11 @@
-
 // firebase.js
+// Conexión compartida de Educa Digital con Firebase (SDK modular).
 
-// Firebase SDK modular
 import { initializeApp } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js";
-
 import { getFirestore } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
-
 import { getAuth } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js";
 
-import { getStorage } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-storage.js";
-
-// Configuración de Firebase
+// Configuración del proyecto Firebase Educa Digital.
 const firebaseConfig = {
   apiKey: "AIzaSyAC6wVTMUyH5O7pR7NrtG1-i-MyQgOSB1g",
   authDomain: "educadigital-f1393.firebaseapp.com",
@@ -20,13 +15,8 @@ const firebaseConfig = {
   appId: "1:309526687498:web:271c34d0c858cc48d494f3"
 };
 
-// Inicializar Firebase
 const app = initializeApp(firebaseConfig);
-
-// Inicializar servicios
 const db = getFirestore(app);
 const auth = getAuth(app);
-const storage = getStorage(app);
 
-// Exportar para utilizar en otras páginas
-export { app, db, auth, storage };
+export { app, db, auth };
