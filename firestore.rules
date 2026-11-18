@@ -1,0 +1,20 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Lectura pública para mostrar el listado en graduados.html.
+    match /graduados/{documentId} {
+      allow read: if true;
+      // Reemplazar ADMIN_UID_AQUI por el UID exacto de la cuenta administradora.
+      allow create, update, delete: if request.auth != null
+        && request.auth.uid == "ADMIN_UID_AQUI";
+    }
+
+    // El panel usa este documento para marcar que la importación inicial se completó.
+    match /configuracion/{documentId} {
+      // La página pública consulta este indicador; solo el administrador puede modificarlo.
+      allow read: if true;
+      allow write: if request.auth != null
+        && request.auth.uid == "ADMIN_UID_AQUI";
+    }
+  }
+}
