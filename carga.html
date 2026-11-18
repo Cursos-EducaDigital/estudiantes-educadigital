@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#07152f">
+  <title>Administración de graduados | Educa Digital</title>
+  <link rel="stylesheet" href="estilos.css">
+  <link rel="stylesheet" href="graduados.css">
+  <link rel="stylesheet" href="carga.css">
+</head>
+<body class="pagina-carga">
+  <section class="bloqueo-acceso" id="bloqueo-acceso" role="dialog" aria-modal="true" aria-labelledby="titulo-acceso">
+    <div class="acceso-panel">
+      <div class="acceso-marca">EDUCA DIGITAL</div>
+      <p class="acceso-etiqueta">ÁREA RESTRINGIDA</p>
+      <h1 id="titulo-acceso">Acceso administrativo</h1>
+      <p class="acceso-descripcion">Introduzca la contraseña para ingresar al panel de administración de graduados.</p>
+      <form id="formulario-acceso" autocomplete="off">
+        <label for="contrasena-acceso">Contraseña</label>
+        <input type="password" id="contrasena-acceso" inputmode="numeric" maxlength="20" placeholder="Introducir contraseña" autocomplete="off" required autofocus>
+        <p class="acceso-error" id="error-acceso" role="alert" aria-live="polite"></p>
+        <button type="submit" class="boton-principal">INGRESAR</button>
+      </form>
+      <a class="volver-inicio" href="graduados.html">Volver al listado público</a>
+    </div>
+  </section>
+
+  <header class="carga-header">
+    <a class="carga-logo" href="index.html">EDUCA <span>DIGITAL</span></a>
+    <div class="carga-header-derecha">
+      <span class="estado-administrador">Panel administrativo</span>
+      <button type="button" class="boton-secundario" id="cerrar-sesion">Bloquear panel</button>
+    </div>
+  </header>
+
+  <main class="carga-contenido" id="panel-administracion" hidden>
+    <section class="carga-introduccion">
+      <p class="carga-sobretitulo">GESTIÓN INSTITUCIONAL</p>
+      <h1>Administración de graduados</h1>
+      <p>Añada nuevos registros, revise la información existente o actualice los datos del listado público de Educa Digital.</p>
+    </section>
+
+    <section class="carga-resumen">
+      <div class="resumen-tarjeta">
+        <span class="resumen-valor" id="total-graduados">—</span>
+        <span class="resumen-texto">Graduados registrados</span>
+      </div>
+      <div class="resumen-tarjeta">
+        <span class="resumen-valor">15</span>
+        <span class="resumen-texto">Registros por página en el listado público</span>
+      </div>
+    </section>
+
+    <section class="carga-panel" aria-labelledby="titulo-formulario">
+      <div class="carga-panel-cabecera">
+        <div><p class="carga-sobretitulo">REGISTRO</p><h2 id="titulo-formulario">Añadir graduado</h2></div>
+        <span class="carga-indicador">Edición de datos</span>
+      </div>
+      <form id="formulario-graduado" class="formulario-graduado">
+        <input type="hidden" id="indice-edicion" value="">
+        <div class="campo-graduado"><label for="codigo-graduado">Código</label><input id="codigo-graduado" type="text" maxlength="30" placeholder="Ej.: ED-2026-001" required></div>
+        <div class="campo-graduado"><label for="apellido-graduado">Apellido</label><input id="apellido-graduado" type="text" maxlength="60" placeholder="Apellido" required></div>
+        <div class="campo-graduado"><label for="nombre-graduado">Nombre</label><input id="nombre-graduado" type="text" maxlength="60" placeholder="Nombre" required></div>
+        <div class="campo-graduado"><label for="fecha-graduado">Fecha de expedición</label><input id="fecha-graduado" type="date" required></div>
+        <div class="acciones-formulario">
+          <button type="submit" class="boton-principal" id="guardar-graduado">Guardar graduado</button>
+          <button type="button" class="boton-secundario" id="cancelar-edicion" hidden>Cancelar edición</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="carga-panel" aria-labelledby="titulo-listado-admin">
+      <div class="carga-panel-cabecera">
+        <div><p class="carga-sobretitulo">BASE DE REGISTROS</p><h2 id="titulo-listado-admin">Graduados registrados</h2></div>
+        <input type="search" id="buscar-admin" class="buscador-admin" maxlength="30" placeholder="Buscar registro..." aria-label="Buscar graduados en administración">
+      </div>
+      <div class="tabla-contenedor">
+        <table class="tabla-admin">
+          <thead><tr><th>Código</th><th>Apellido</th><th>Nombre</th><th>Expedición</th><th>Acciones</th></tr></thead>
+          <tbody id="lista-admin"><tr><td colspan="5" class="tabla-vacia">Los registros aparecerán aquí al conectar la gestión de datos.</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="carga-publicacion">
+      <div>
+        <h2>Actualizar listado público</h2>
+        <p>Descargue el archivo actualizado y reemplace <strong>graduados.js</strong> en el repositorio de GitHub para publicar los cambios.</p>
+      </div>
+      <button type="button" class="boton-principal" id="descargar-datos" disabled>Descargar graduados.js actualizado</button>
+      <p class="nota-publicacion" id="estado-publicacion" aria-live="polite">La descarga se habilitará al conectar la gestión de registros.</p>
+    </section>
+
+    <footer class="carga-footer"><span>EDUCA DIGITAL</span><a href="graduados.html">Ver listado público</a></footer>
+  </main>
+
+  <script>
+    // Bloqueo visual para una web estática. No constituye autenticación segura:
+    // la contraseña puede descubrirse inspeccionando el código fuente.
+    (() => {
+      const CLAVE = "1409";
+      const bloqueo = document.getElementById("bloqueo-acceso");
+      const formulario = document.getElementById("formulario-acceso");
+      const campo = document.getElementById("contrasena-acceso");
+      const error = document.getElementById("error-acceso");
+      const panel = document.getElementById("panel-administracion");
+
+      function bloquear() {
+        bloqueo.hidden = false;
+        panel.hidden = true;
+        campo.value = "";
+        error.textContent = "";
+        setTimeout(() => campo.focus(), 0);
+      }
+
+      formulario.addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (campo.value === CLAVE) {
+          bloqueo.hidden = true;
+          panel.hidden = false;
+          campo.value = "";
+          error.textContent = "";
+        } else {
+          error.textContent = "La contraseña ingresada no es correcta.";
+          campo.value = "";
+          campo.focus();
+        }
+      });
+
+      document.getElementById("cerrar-sesion").addEventListener("click", bloquear);
+
+      document.addEventListener("keydown", (e) => {
+        if (!bloqueo.hidden && e.key === "Escape") {
+          e.preventDefault();
+          e.stopPropagation();
+          campo.focus();
+        }
+      }, true);
+    })();
+  </script>
+</body>
+</html>
