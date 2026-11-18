@@ -19,9 +19,11 @@ const db = getFirestore(app);
 const graduadosRef = collection(db, "graduados");
 const contadorRef = doc(db, "configuracion", "contadorGraduados");
 const ADMIN_PASSWORD = "EducaDigital@1409";
-const PAGE_SIZE = 15;
+const PAGE_SIZE = 15; // Página pública: se conserva en 15 registros.
+const ADMIN_PAGE_SIZE = 5; // Panel administrativo: solo muestra cinco filas.
 let registros = [];
 let pagina = 1;
+let paginaAdmin = 1;
 let unsubscribe = null;
 
 const normalizar = value => String(value ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
@@ -74,16 +76,36 @@ function renderPublico() {
 function renderAdmin() {
   const body = document.getElementById("tabla-admin");
   if (!body) return;
+
   const total = document.getElementById("total-graduados");
   if (total) total.textContent = `${registros.length} registro${registros.length === 1 ? "" : "s"}`;
-  if (!registros.length) {
-    body.innerHTML = '<tr><td colspan="5" class="empty">Todavía no hay graduados cargados.</td></tr>';
-    return;
+
+  const filtro = normalizar(document.getElementById("buscar-admin")?.value || "");
+  const filtrados = registros.filter(item =>
+    [item.codigo, item.apellido, item.nombre].some(valor => normalizar(valor).includes(filtro))
+  );
+  const totalPaginas = Math.max(1, Math.ceil(filtrados.length / ADMIN_PAGE_SIZE));
+  paginaAdmin = Math.min(Math.max(1, paginaAdmin), totalPaginas);
+  const inicio = (paginaAdmin - 1) * ADMIN_PAGE_SIZE;
+  const visibles = filtrados.slice(inicio, inicio + ADMIN_PAGE_SIZE);
+
+  if (!visibles.length) {
+    body.innerHTML = `<tr><td colspan="5" class="empty">${filtro ? "No se encontraron resultados." : "Todavía no hay graduados cargados."}</td></tr>`;
+  } else {
+    body.innerHTML = visibles.map(item => `<tr>
+      <td>${escapar(item.codigo)}</td><td>${escapar(item.apellido)}</td><td>${escapar(item.nombre)}</td><td>${escapar(fechaVisible(item.fecha))}</td>
+      <td><div class="actions"><button class="action-btn" type="button" data-edit="${escapar(item.id)}">Editar</button><button class="action-btn delete" type="button" data-delete="${escapar(item.id)}">Borrar</button></div></td>
+    </tr>`).join("");
   }
-  body.innerHTML = registros.map(item => `<tr>
-    <td>${escapar(item.codigo)}</td><td>${escapar(item.apellido)}</td><td>${escapar(item.nombre)}</td><td>${escapar(fechaVisible(item.fecha))}</td>
-    <td><div class="actions"><button class="action-btn" type="button" data-edit="${escapar(item.id)}">Editar</button><button class="action-btn delete" type="button" data-delete="${escapar(item.id)}">Borrar</button></div></td>
-  </tr>`).join("");
+
+  const info = document.getElementById("admin-pagina-info");
+  const anterior = document.getElementById("admin-anterior");
+  const siguiente = document.getElementById("admin-siguiente");
+  if (info) info.textContent = `Página ${paginaAdmin} de ${totalPaginas}`;
+  if (anterior) anterior.disabled = paginaAdmin <= 1;
+  if (siguiente) siguiente.disabled = paginaAdmin >= totalPaginas;
+  const resultado = document.getElementById("admin-resultados");
+  if (resultado) resultado.textContent = filtro ? `${filtrados.length} resultado${filtrados.length === 1 ? "" : "s"}` : `Mostrando ${visibles.length} de ${registros.length} graduados`;
 }
 
 function actualizarCodigoSiguiente() {
@@ -131,6 +153,10 @@ function iniciarPanelAdmin() {
   const mensaje = document.getElementById("mensaje-form");
   const guardar = document.getElementById("guardar-btn");
   const cancelar = document.getElementById("cancelar-edicion");
+  const buscadorAdmin = document.getElementById("buscar-admin");
+  buscadorAdmin.addEventListener("input", () => { paginaAdmin = 1; renderAdmin(); });
+  document.getElementById("admin-anterior").addEventListener("click", () => { paginaAdmin--; renderAdmin(); });
+  document.getElementById("admin-siguiente").addEventListener("click", () => { paginaAdmin++; renderAdmin(); });
 
   form.addEventListener("submit", async event => {
     event.preventDefault();
@@ -161,7 +187,9 @@ function iniciarPanelAdmin() {
         });
         mensaje.textContent = "Graduado cargado correctamente.";
       }
+      paginaAdmin = 1;
       limpiarFormulario();
+      renderAdmin();
     } catch (err) {
       console.error(err);
       mensaje.classList.add("error");
