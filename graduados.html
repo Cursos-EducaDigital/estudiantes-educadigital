@@ -1,206 +1,94 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#07152f">
-    <meta name="description" content="Consulta el listado oficial de graduados de Educa Digital.">
-    <title>Graduados | Educa Digital</title>
-
-    <!-- Estilos generales del sitio -->
-    <link rel="stylesheet" href="estilos.css">
-
-    <!-- Estilos exclusivos de esta página -->
-    <link rel="stylesheet" href="graduados.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Consulta el registro institucional de graduados de Educa Digital.">
+  <title>Graduados | Educa Digital</title>
+  <link rel="icon" href="img/logo.png">
+  <link rel="stylesheet" href="estilos.css">
+  <link rel="stylesheet" href="graduados.css">
 </head>
-
 <body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Educa Digital, inicio">
+        <img src="img/logo.png" alt="Educa Digital" class="brand-logo">
+        <span>Educa Digital</span>
+      </a>
+      <nav class="main-nav" aria-label="Navegación principal">
+        <a href="index.html">Inicio</a>
+        <a href="index.html#quienes-somos">Quiénes somos</a>
+        <a href="index.html#curso">El curso</a>
+        <a href="index.html#que-aprenderas">Qué aprenderás</a>
+        <a href="graduados.html" aria-current="page">Graduados</a>
+      </nav>
+      <a class="header-contact" href="https://wa.me/543794576062" target="_blank" rel="noopener">Consultar</a>
+    </div>
+  </header>
 
-    <!-- ENCABEZADO Y NAVEGACIÓN -->
-    <header class="topbar">
-        <div class="container nav">
+  <main>
+    <section class="graduados-hero">
+      <div class="container">
+        <p class="eyebrow">EDUCA DIGITAL · REGISTRO INSTITUCIONAL</p>
+        <h1>Nuestros <span>Graduados</span></h1>
+        <p>Reconocemos el esfuerzo, la dedicación y el compromiso de quienes completaron su formación en computación junto a Educa Digital.</p>
+      </div>
+    </section>
 
-            <a class="brand" href="index.html#inicio" aria-label="Educa Digital, inicio">
-                <img src="logo.png" alt="Logo de Educa Digital">
-                <span>EDUCA DIGITAL</span>
-            </a>
-
-            <nav class="nav-links" aria-label="Navegación principal">
-                <a href="index.html#nosotros">Quiénes somos</a>
-                <a href="index.html#curso">El curso</a>
-                <a href="index.html#aprendizaje">Qué aprenderás</a>
-                <a href="index.html#videos">Videos</a>
-                <a href="graduados.html" aria-current="page">Graduados</a>
-            </nav>
-
-            <a class="btn btn-primary"
-               href="https://wa.me/543794576062?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20el%20curso%20de%20computaci%C3%B3n."
-               target="_blank"
-               rel="noopener">
-                Consultar por WhatsApp
-            </a>
-
+    <section class="graduados-section">
+      <div class="container">
+        <div class="graduados-heading">
+          <p class="eyebrow">Registro institucional</p>
+          <h2>Listado de graduados</h2>
+          <p>Consulta los registros de las personas que finalizaron nuestro curso.</p>
         </div>
-    </header>
 
-
-    <!-- CONTENIDO PRINCIPAL -->
-    <main class="graduados-main">
-
-        <section class="graduados-hero">
-            <div class="container">
-
-                <span class="eyebrow">Educa Digital</span>
-
-                <h1>
-                    Nuestros <span class="gradient-text">Graduados</span>
-                </h1>
-
-                <p>
-                    Reconocemos el esfuerzo, la dedicación y el compromiso
-                    de quienes completaron su formación en computación
-                    junto a Educa Digital.
-                </p>
-
-            </div>
-        </section>
-
-
-        <!-- LISTADO DE GRADUADOS -->
-        <section class="graduados-section">
-            <div class="container">
-
-                <div class="graduados-panel">
-
-                    <div class="graduados-heading">
-                        <div>
-                            <span class="eyebrow">Registro institucional</span>
-                            <h2>Listado de graduados</h2>
-                            <p>
-                                Consulta los registros de las personas
-                                que finalizaron nuestro curso.
-                            </p>
-                        </div>
-                    </div>
-
-<!-- BUSCADOR -->
-<div class="graduados-search">
-    <input
-        type="search"
-        id="buscar-graduado"
-        maxlength="10"
-        placeholder="Buscar por código, apellido o nombre..."
-        aria-label="Buscar graduados"
-        autocomplete="off"
-    >
-
-    <button
-        type="button"
-        id="limpiar-busqueda"
-        aria-label="Limpiar búsqueda"
-        title="Limpiar búsqueda">
-        ✕
-    </button>
-</div>
-                    <!-- INFORMACIÓN DEL LISTADO -->
-                    <div class="graduados-info">
-                        <span id="total-graduados">
-                            Registro de graduados
-                        </span>
-
-                        <span id="pagina-info">
-                            Página 1
-                        </span>
-                    </div>
-
-
-                    <!-- TABLA -->
-                    <div class="tabla-container">
-
-                        <table class="graduados-table">
-
-                            <thead>
-                                <tr>
-                                    <th scope="col">Código</th>
-                                    <th scope="col">Apellido</th>
-                                    <th scope="col">Nombre</th>
-                                    <th scope="col">Expedición</th>
-                                </tr>
-                            </thead>
-
-                            <tbody id="graduados-lista" aria-live="polite">
-                                <!-- Los registros se cargarán desde graduados.js -->
-                            </tbody>
-
-                        </table>
-
-                    </div>
-
-
-                    <!-- PAGINACIÓN -->
-                    <div class="graduados-pagination">
-
-                        <button
-                            type="button"
-                            id="pagina-anterior"
-                            class="pagination-btn"
-                            disabled
-                            aria-label="Página anterior">
-                            &#8592; Anterior
-                        </button>
-
-                        <span id="pagina-actual" aria-live="polite">
-                            1
-                        </span>
-
-                        <button
-                            type="button"
-                            id="pagina-siguiente"
-                            class="pagination-btn"
-                            disabled
-                            aria-label="Página siguiente">
-                            Siguiente &#8594;
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-        </section>
-
-    </main>
-
-
-    <!-- PIE DE PÁGINA -->
-    <footer>
-        <div class="container footer-row">
-
-            <span>
-                © <span id="year">2026</span>
-                Educa Digital. Todos los derechos reservados.
-            </span>
-
-            <span>Aprende Computación Desde Casa</span>
-
+        <div class="graduados-tools">
+          <label class="sr-only" for="buscar-graduado">Buscar graduado</label>
+          <input id="buscar-graduado" type="search" maxlength="10"
+                 placeholder="Buscar por código, apellido o nombre..." autocomplete="off">
+          <button id="limpiar-busqueda" type="button" aria-label="Limpiar búsqueda" disabled>✕</button>
         </div>
-    </footer>
 
+        <p id="total-graduados" class="graduados-total" aria-live="polite">Cargando registros…</p>
+        <p id="estado-firebase" class="graduados-status" role="status" aria-live="polite"></p>
 
-    <!-- WHATSAPP -->
-    <a
-        class="btn btn-primary whatsapp-float"
-        href="https://wa.me/543794576062?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20Educa%20Digital."
-        target="_blank"
-        rel="noopener"
-        aria-label="Contactar a Educa Digital por WhatsApp">
-        WhatsApp
-    </a>
+        <div class="graduados-table-wrap">
+          <table id="graduados-table" class="graduados-table">
+            <thead>
+              <tr>
+                <th scope="col">Código</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Expedición</th>
+              </tr>
+            </thead>
+            <tbody id="graduados-lista">
+              <tr><td colspan="4" class="graduados-empty">Cargando graduados…</td></tr>
+            </tbody>
+          </table>
+        </div>
 
+        <div class="graduados-pagination" aria-label="Paginación">
+          <button id="pagina-anterior" type="button" disabled>← Anterior</button>
+          <span id="pagina-info">Página 1 de 1</span><span id="pagina-actual" hidden>1</span>
+          <button id="pagina-siguiente" type="button" disabled>Siguiente →</button>
+        </div>
+      </div>
+    </section>
+  </main>
 
-    <!-- FUNCIONALIDAD DEL LISTADO -->
-    <script src="graduados.js"></script>
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="year">2026</span> Educa Digital. Todos los derechos reservados.</p>
+      <p>Aprende Computación Desde Casa</p>
+    </div>
+  </footer>
 
+  <a class="whatsapp-float" href="https://wa.me/543794576062" target="_blank" rel="noopener"
+     aria-label="Consultar por WhatsApp">WhatsApp</a>
+
+  <script type="module" src="graduados.js"></script>
 </body>
 </html>
