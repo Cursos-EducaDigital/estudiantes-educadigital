@@ -29,7 +29,15 @@
 
     <section class="card list-card">
       <div class="section-heading"><div><span class="eyebrow">BASE DE DATOS</span><h2>Graduados registrados</h2></div><span class="count-pill" id="total-graduados">0 registros</span></div>
+      <label class="admin-search-label" for="buscar-admin">Buscar graduado</label>
+      <input class="admin-search" id="buscar-admin" type="search" maxlength="80" placeholder="Buscar por código, apellido o nombre…" autocomplete="off">
       <div class="table-scroll"><table><thead><tr><th>CÓDIGO</th><th>APELLIDO</th><th>NOMBRE</th><th>FECHA DE GRADUACIÓN</th><th>ACCIONES</th></tr></thead><tbody id="tabla-admin"><tr><td colspan="5" class="empty">Conectando con Firestore…</td></tr></tbody></table></div>
+      <nav class="admin-pagination" aria-label="Paginación de graduados">
+        <button class="admin-page-btn" id="admin-anterior" type="button" aria-label="Ver graduados anteriores" disabled>‹</button>
+        <span class="admin-page-info" id="admin-pagina-info">Página 1 de 1</span>
+        <button class="admin-page-btn" id="admin-siguiente" type="button" aria-label="Ver graduados siguientes" disabled>›</button>
+      </nav>
+      <p class="admin-results" id="admin-resultados" aria-live="polite">Mostrando los últimos 5 graduados.</p>
       <p class="list-note">Los cambios se reflejan automáticamente en la página pública de graduados.</p>
     </section>
   </main>
