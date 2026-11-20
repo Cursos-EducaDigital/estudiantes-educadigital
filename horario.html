@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07152f">
+  <meta name="description" content="Consulta el horario local de las clases de Educa Digital desde cualquier ciudad de Estados Unidos.">
+  <title>Consulta tu horario de clases | Educa Digital</title>
+  <link rel="stylesheet" href="horario.css">
+  <script src="horario.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Educa Digital, página principal">
+      <span class="brand-name">EDUCA DIGITAL</span>
+      <span class="brand-tagline">Aprende Computación Desde Casa</span>
+    </a>
+  </header>
+
+  <main class="page-container">
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow">CLASES EN VIVO</p>
+      <h1 id="page-title">Consulta tu horario de clases</h1>
+      <p class="intro-text">
+        Selecciona tu ciudad en Estados Unidos y descubre a qué hora comienzan
+        las clases de Educa Digital en tu horario local.
+      </p>
+    </section>
+
+    <section class="schedule-card" aria-labelledby="search-title">
+      <div class="section-heading">
+        <h2 id="search-title">¿Desde qué ciudad te conectarás?</h2>
+        <p>Puedes escribir el nombre de la ciudad o buscarla por estado.</p>
+      </div>
+
+      <form id="city-form" class="city-form" autocomplete="off">
+        <div class="form-field">
+          <label for="state-select">Estado</label>
+          <select id="state-select" name="state">
+            <option value="">Todos los estados</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="city-search">Ciudad</label>
+          <input
+            id="city-search"
+            name="city"
+            type="search"
+            list="city-options"
+            placeholder="Ej.: Miami, Orlando, Nueva York..."
+            aria-describedby="city-help"
+            required
+          >
+          <datalist id="city-options"></datalist>
+          <small id="city-help">Escribe y selecciona una ciudad de la lista.</small>
+        </div>
+
+        <button type="submit" id="check-schedule" class="primary-button">
+          Consultar horario
+        </button>
+      </form>
+
+      <p id="form-message" class="form-message" role="status" aria-live="polite"></p>
+
+      <section id="schedule-result" class="schedule-result" aria-live="polite" hidden>
+        <p class="result-kicker">HORARIO DE TUS CLASES</p>
+        <h2 id="selected-location">Tu ciudad</h2>
+
+        <div class="local-time-panel">
+          <span class="time-label">En tu horario local</span>
+          <p id="local-time" class="time-value">--:--</p>
+          <p class="class-days">Sábados y domingos</p>
+        </div>
+
+        <div class="argentina-time-panel">
+          <span class="time-label">Horario de Argentina</span>
+          <strong id="argentina-time">10:00 a. m.</strong>
+        </div>
+
+        <p id="date-note" class="date-note"></p>
+      </section>
+    </section>
+
+    <section class="schedule-info" aria-labelledby="info-title">
+      <h2 id="info-title">¿Cuándo son las clases?</h2>
+      <p>Las clases en vivo se realizan todos los sábados y domingos.</p>
+      <p class="base-schedule">
+        <span>Horario de Argentina</span>
+        <strong>10:00 a. m.</strong>
+      </p>
+      <p class="timezone-note">
+        La hora local puede cambiar según la ciudad y el horario de verano.
+        El conversor tiene en cuenta esos cambios automáticamente.
+      </p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="current-year">2026</span> Educa Digital. Aprende Computación Desde Casa.</p>
+  </footer>
+</body>
+</html>
