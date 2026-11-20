@@ -1,28 +1,29 @@
 
-/* =========================================================
-   EDUCA DIGITAL — PÁGINA DE HORARIOS
-   Diseño recuperado y adaptado a la identidad de marca.
-   ========================================================= */
+/* ==========================================================
+   EDUCA DIGITAL — CONSULTA DE HORARIOS
+   Diseño visual renovado sobre la estética anterior.
+   ========================================================== */
 
 :root {
   --navy: #07152f;
-  --blue-deep: #0b2045;
+  --navy-2: #0b2045;
   --blue: #2589ff;
   --cyan: #27d9f2;
   --magenta: #ec4bbd;
 
   --text: #17243a;
   --muted: #65738a;
-  --surface: #ffffff;
+  --white: #ffffff;
   --background: #f3f7fc;
   --border: #dce5f0;
 
-  --shadow: 0 18px 55px rgba(7, 21, 47, .09);
+  --shadow-card: 0 18px 50px rgba(7, 21, 47, .09);
+  --shadow-soft: 0 8px 25px rgba(7, 21, 47, .06);
 }
 
-/* =========================================================
-   CONFIGURACIÓN GENERAL
-   ========================================================= */
+/* =========================
+   BASE
+   ========================= */
 
 * {
   box-sizing: border-box;
@@ -37,35 +38,29 @@ body {
   min-height: 100vh;
   color: var(--text);
   background:
-    radial-gradient(
-      ellipse at 10% 0%,
-      rgba(39, 217, 242, .10),
-      transparent 34rem
-    ),
-    radial-gradient(
-      ellipse at 95% 12%,
-      rgba(236, 75, 189, .07),
-      transparent 30rem
-    ),
-    var(--background);
-  font-family: Inter, Arial, sans-serif;
+    radial-gradient(circle at 8% 15%, rgba(39,217,242,.13), transparent 330px),
+    radial-gradient(circle at 94% 25%, rgba(236,75,189,.09), transparent 310px),
+    linear-gradient(180deg, #f7faff 0%, #eef4fb 100%);
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
   line-height: 1.6;
 }
 
-/* =========================================================
-   ENCABEZADO OFICIAL EDUCA DIGITAL
-   Utiliza el header compartido con index.html.
-   ========================================================= */
+/* =========================
+   HEADER DEL SITIO
+   Se conserva la identidad
+   del encabezado principal.
+   ========================= */
 
 .topbar {
   position: sticky;
   top: 0;
   z-index: 100;
   width: 100%;
-  background: rgba(7, 21, 47, .96);
-  border-bottom: 1px solid rgba(39, 217, 242, .22);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(7, 21, 47, .97);
+  border-bottom: 1px solid rgba(39, 217, 242, .25);
+  box-shadow: 0 5px 22px rgba(7, 21, 47, .12);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
 .topbar .container {
@@ -85,9 +80,9 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 12px;
+  gap: 11px;
   flex-shrink: 0;
-  color: #f7fbff;
+  color: var(--white);
   text-decoration: none;
 }
 
@@ -99,17 +94,17 @@ body {
 }
 
 .topbar .brand span {
-  color: #f7fbff;
-  font-size: 1.08rem;
-  font-weight: 800;
-  letter-spacing: .3px;
+  color: var(--white);
+  font-size: 1.05rem;
+  font-weight: 850;
+  letter-spacing: .035em;
 }
 
 .topbar .nav-links {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 19px;
+  gap: 18px;
 }
 
 .topbar .nav-links a {
@@ -131,44 +126,53 @@ body {
   text-decoration: none;
 }
 
-/* =========================================================
-   CONTENIDO PRINCIPAL
-   ========================================================= */
+/* =========================
+   CONTENEDOR PRINCIPAL
+   ========================= */
 
 .page-container {
-  width: min(100% - 36px, 900px);
+  width: min(100% - 36px, 960px);
   margin: 0 auto;
-  padding: 64px 0 58px;
+  padding: 68px 0 70px;
 }
-
-/* Evita que el padding global de estilos.css
-   altere la distribución de esta página. */
 
 .page-container > section {
   padding: 0;
 }
 
-/* =========================================================
+/* =========================
    PRESENTACIÓN
-   ========================================================= */
+   ========================= */
 
 .intro {
-  max-width: 720px;
-  margin: 0 auto 32px;
+  position: relative;
+  max-width: 760px;
+  margin: 0 auto 42px;
   text-align: center;
 }
 
 .eyebrow {
-  display: inline-block;
-  margin: 0 0 12px;
-  padding: 5px 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 17px;
+  padding: 7px 15px;
   color: #087f9b;
-  background: rgba(39, 217, 242, .13);
-  border: 1px solid rgba(39, 217, 242, .32);
-  border-radius: 999px;
+  background: rgba(39, 217, 242, .14);
+  border: 1px solid rgba(39, 217, 242, .36);
+  border-radius: 50px;
   font-size: .72rem;
-  font-weight: 800;
-  letter-spacing: .13em;
+  font-weight: 850;
+  letter-spacing: .14em;
+}
+
+.intro .eyebrow::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  background: var(--cyan);
+  border-radius: 50%;
+  box-shadow: 0 0 9px rgba(39,217,242,.8);
 }
 
 h1,
@@ -178,67 +182,78 @@ p {
 }
 
 .intro h1 {
-  margin-bottom: 13px;
+  max-width: 730px;
+  margin: 0 auto 16px;
   color: var(--navy);
-  font-size: clamp(2rem, 5vw, 3.15rem);
-  line-height: 1.12;
-  letter-spacing: -.045em;
+  font-size: clamp(2.2rem, 5vw, 3.45rem);
+  font-weight: 850;
+  line-height: 1.1;
+  letter-spacing: -.055em;
 }
 
 .intro-text {
-  max-width: 630px;
+  max-width: 640px;
   margin: 0 auto;
   color: var(--muted);
-  font-size: 1.05rem;
+  font-size: 1.06rem;
+  line-height: 1.75;
 }
 
-/* =========================================================
-   TARJETAS PRINCIPALES
-   ========================================================= */
-
-.schedule-card,
-.schedule-info {
-  border: 1px solid rgba(220, 229, 240, .95);
-  border-radius: 22px;
-  background: var(--surface);
-  box-shadow: var(--shadow);
-}
+/* =========================
+   TARJETA DE BÚSQUEDA
+   ========================= */
 
 .schedule-card {
-  padding: clamp(22px, 5vw, 40px);
+  position: relative;
+  overflow: hidden;
+  padding: clamp(25px, 5vw, 44px);
+  background: var(--white);
+  border: 1px solid rgba(220,229,240,.95);
+  border-radius: 25px;
+  box-shadow: var(--shadow-card);
 }
 
-/* =========================================================
-   ENCABEZADO DEL FORMULARIO
-   ========================================================= */
+.schedule-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(
+    90deg,
+    var(--blue),
+    var(--cyan),
+    var(--magenta)
+  );
+}
 
 .section-heading {
-  margin-bottom: 24px;
+  margin-bottom: 29px;
 }
 
-.section-heading h2,
-.schedule-info h2 {
-  margin-bottom: 7px;
+.section-heading h2 {
+  margin-bottom: 8px;
   color: var(--navy);
-  font-size: 1.35rem;
-  font-weight: 800;
-  letter-spacing: -.02em;
+  font-size: clamp(1.3rem, 3vw, 1.6rem);
+  font-weight: 850;
+  letter-spacing: -.035em;
 }
 
-.section-heading p,
-.schedule-info > p {
-  margin-bottom: 0;
+.section-heading p {
+  margin: 0;
   color: var(--muted);
+  font-size: .96rem;
 }
 
-/* =========================================================
-   FORMULARIO DE BÚSQUEDA
-   ========================================================= */
+/* =========================
+   FORMULARIO
+   ========================= */
 
 .city-form {
   display: grid;
-  grid-template-columns: minmax(160px, .8fr) minmax(220px, 1.2fr);
-  gap: 18px;
+  grid-template-columns: minmax(180px, .8fr) minmax(240px, 1.2fr);
+  gap: 20px;
   align-items: end;
 }
 
@@ -246,42 +261,45 @@ p {
   display: flex;
   min-width: 0;
   flex-direction: column;
-  gap: 8px;
+  gap: 9px;
 }
 
 .form-field label {
   color: var(--navy);
   font-size: .9rem;
-  font-weight: 750;
+  font-weight: 800;
 }
 
 .form-field input,
 .form-field select {
   width: 100%;
-  min-height: 52px;
-  padding: 0 14px;
+  min-height: 55px;
+  padding: 0 16px;
   color: var(--text);
-  background: #fbfdff;
-  border: 1px solid #cbd8e8;
-  border-radius: 11px;
+  background: #f8fbff;
+  border: 1px solid #d5e0ed;
+  border-radius: 13px;
   outline: none;
-  font: inherit;
+  font-family: inherit;
+  font-size: .94rem;
   transition:
-    border-color .18s ease,
-    box-shadow .18s ease,
-    background .18s ease;
+    border-color .2s ease,
+    background .2s ease,
+    box-shadow .2s ease,
+    transform .2s ease;
 }
 
 .form-field input:hover,
 .form-field select:hover {
-  border-color: #a9bfd9;
+  background: #fff;
+  border-color: #a9c7e9;
 }
 
 .form-field input:focus,
 .form-field select:focus {
   background: #fff;
   border-color: var(--blue);
-  box-shadow: 0 0 0 4px rgba(37, 137, 255, .13);
+  box-shadow: 0 0 0 4px rgba(37,137,255,.13);
 }
 
 .form-field input::placeholder {
@@ -290,41 +308,45 @@ p {
 
 .form-field small {
   color: var(--muted);
-  font-size: .76rem;
+  font-size: .78rem;
+  line-height: 1.45;
 }
 
-/* =========================================================
-   BOTÓN CONSULTAR
-   ========================================================= */
+/* =========================
+   BOTÓN PRINCIPAL
+   ========================= */
 
 .primary-button {
   grid-column: 1 / -1;
-  min-height: 54px;
+  position: relative;
+  min-height: 56px;
   margin-top: 2px;
-  padding: 12px 22px;
+  padding: 13px 24px;
+  overflow: hidden;
   color: #fff;
   background: linear-gradient(
     105deg,
-    var(--blue),
-    #1765d1 62%,
-    #594bd5
+    #2589ff 0%,
+    #1765d1 58%,
+    #514bd3 100%
   );
   border: 0;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(37, 137, 255, .22);
+  border-radius: 13px;
+  box-shadow: 0 9px 22px rgba(37,137,255,.23);
   cursor: pointer;
-  font: inherit;
-  font-weight: 800;
+  font-family: inherit;
+  font-size: .96rem;
+  font-weight: 850;
   transition:
-    transform .18s ease,
-    box-shadow .18s ease,
-    filter .18s ease;
+    transform .2s ease,
+    box-shadow .2s ease,
+    filter .2s ease;
 }
 
 .primary-button:hover {
-  filter: brightness(1.06);
-  box-shadow: 0 11px 24px rgba(37, 137, 255, .28);
-  transform: translateY(-1px);
+  filter: brightness(1.07);
+  box-shadow: 0 13px 27px rgba(37,137,255,.30);
+  transform: translateY(-2px);
 }
 
 .primary-button:active {
@@ -333,36 +355,35 @@ p {
 
 .primary-button:focus-visible {
   outline: 3px solid var(--cyan);
-  outline-offset: 3px;
+  outline-offset: 4px;
 }
 
-/* =========================================================
-   MENSAJES DEL FORMULARIO
-   ========================================================= */
+/* =========================
+   MENSAJES
+   ========================= */
 
 .form-message {
   min-height: 1.4em;
   margin: 12px 0 0;
   color: #b42318;
-  font-size: .9rem;
+  font-size: .88rem;
 }
 
-/* =========================================================
-   RESULTADO DEL HORARIO
-   ========================================================= */
+/* =========================
+   RESULTADO
+   ========================= */
 
 .schedule-result {
-  margin-top: 12px;
-  padding: 24px;
-  border: 1px solid rgba(39, 217, 242, .36);
-  border-radius: 17px;
-  background: linear-gradient(
-    135deg,
-    #f0fcff,
-    #f7f8ff 72%,
-    #fff7fd
-  );
-  animation: result-in .3s ease both;
+  position: relative;
+  margin-top: 25px;
+  padding: clamp(20px, 4vw, 30px);
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(236,75,189,.10), transparent 230px),
+    linear-gradient(135deg, #eafaff 0%, #f5f8ff 58%, #fff7fd 100%);
+  border: 1px solid rgba(39,217,242,.38);
+  border-radius: 20px;
+  animation: result-in .35s ease both;
 }
 
 .schedule-result[hidden] {
@@ -370,186 +391,230 @@ p {
 }
 
 .result-kicker {
-  margin-bottom: 4px;
-  color: #087f9b;
-  font-size: .7rem;
-  font-weight: 850;
-  letter-spacing: .13em;
+  margin-bottom: 5px;
+  color: #0785a2;
+  font-size: .72rem;
+  font-weight: 900;
+  letter-spacing: .14em;
 }
 
 .schedule-result h2 {
-  margin-bottom: 18px;
+  margin-bottom: 22px;
   color: var(--navy);
-  font-size: 1.35rem;
+  font-size: clamp(1.35rem, 3vw, 1.65rem);
+  font-weight: 850;
+  letter-spacing: -.035em;
 }
 
-/* =========================================================
-   PANEL DESTACADO DE HORA LOCAL
-   ========================================================= */
+/* =========================
+   PANEL DE HORA LOCAL
+   ========================= */
 
 .local-time-panel {
-  padding: 22px 18px;
+  position: relative;
+  padding: 29px 20px 25px;
+  overflow: hidden;
   color: #fff;
   text-align: center;
-  background: linear-gradient(
-    120deg,
-    var(--navy),
-    #123b70 70%,
-    #164f78
-  );
-  border: 1px solid rgba(39, 217, 242, .18);
-  border-radius: 15px;
-  box-shadow: 0 10px 25px rgba(7, 21, 47, .13);
+  background:
+    radial-gradient(circle at 15% 0%, rgba(39,217,242,.18), transparent 210px),
+    linear-gradient(125deg, #07152f 0%, #0b2045 55%, #123e70 100%);
+  border: 1px solid rgba(39,217,242,.28);
+  border-radius: 17px;
+  box-shadow: 0 13px 28px rgba(7,21,47,.18);
 }
 
-.time-label {
+.local-time-panel::before,
+.local-time-panel::after {
+  content: "";
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  border: 1px solid rgba(39,217,242,.12);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.local-time-panel::before {
+  top: -95px;
+  left: -45px;
+}
+
+.local-time-panel::after {
+  right: -80px;
+  bottom: -105px;
+  width: 210px;
+  height: 210px;
+}
+
+.local-time-panel .time-label {
+  position: relative;
+  z-index: 1;
   display: block;
-  color: rgba(255, 255, 255, .78);
-  font-size: .85rem;
+  color: rgba(255,255,255,.77);
+  font-size: .9rem;
+  font-weight: 600;
 }
 
 .time-value {
-  margin: 3px 0 0;
+  position: relative;
+  z-index: 1;
+  margin: 5px 0 0;
   color: var(--cyan);
-  font-size: clamp(2.3rem, 8vw, 3.4rem);
-  font-weight: 850;
-  line-height: 1.2;
-  letter-spacing: -.04em;
+  font-size: clamp(2.6rem, 9vw, 3.8rem);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -.055em;
+  text-shadow: 0 0 22px rgba(39,217,242,.22);
 }
 
 .class-days {
-  margin: 7px 0 0;
+  position: relative;
+  z-index: 1;
+  margin: 9px 0 0;
   color: #fff;
-  font-size: .9rem;
+  font-size: .94rem;
+  font-weight: 650;
 }
 
-/* =========================================================
-   NOTA INFORMATIVA DE ARGENTINA
-   Adaptada al panel informativo del HTML actual.
-   ========================================================= */
+/* =========================
+   PANEL INFORMATIVO
+   ========================= */
 
 .argentina-time-panel {
   display: flex;
-  align-items: flex-start;
-  gap: 13px;
-  margin-top: 14px;
-  padding: 16px 18px;
-  color: var(--text);
-  background: #f2f7ff;
-  border: 1px solid #dce9fb;
-  border-left: 4px solid var(--cyan);
-  border-radius: 13px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 15px;
+  padding: 17px 19px;
+  background: rgba(255,255,255,.88);
+  border: 1px solid #dce5f0;
+  border-radius: 14px;
 }
 
 .argentina-time-panel .time-label {
-  color: var(--navy);
-  font-size: .95rem;
-  font-weight: 800;
+  color: var(--muted);
+  font-size: .88rem;
 }
 
 .argentina-time-panel strong {
   color: var(--navy);
-  font-size: 1rem;
+  font-size: 1.08rem;
+  font-weight: 850;
 }
 
 .argentina-time-panel p {
-  margin: 4px 0 0;
+  margin: 0;
   color: var(--muted);
-  font-size: .86rem;
-  line-height: 1.55;
+  font-size: .87rem;
+  line-height: 1.6;
 }
-
-/* Si el HTML incluye un icono informativo. */
-
-.argentina-time-panel .info-icon {
-  display: flex;
-  width: 30px;
-  height: 30px;
-  flex: 0 0 30px;
-  align-items: center;
-  justify-content: center;
-  color: #087f9b;
-  background: rgba(39, 217, 242, .16);
-  border-radius: 50%;
-  font-weight: 800;
-}
-
-/* =========================================================
-   FECHA Y DETALLES DEL RESULTADO
-   ========================================================= */
 
 .date-note {
-  margin: 14px 0 0;
+  margin: 16px 0 0;
   color: var(--muted);
-  font-size: .82rem;
-  line-height: 1.55;
+  font-size: .84rem;
+  line-height: 1.6;
 }
 
-/* =========================================================
-   INFORMACIÓN SOBRE LAS CLASES
-   ========================================================= */
+/* =========================
+   INFORMACIÓN DEL CURSO
+   ========================= */
 
 .schedule-info {
-  margin-top: 22px;
-  padding: 26px clamp(22px, 5vw, 34px);
-  box-shadow: 0 8px 28px rgba(7, 21, 47, .055);
+  position: relative;
+  margin-top: 25px;
+  padding: clamp(25px, 4vw, 34px);
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid rgba(220,229,240,.95);
+  border-radius: 22px;
+  box-shadow: var(--shadow-soft);
+}
+
+.schedule-info::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    var(--cyan),
+    var(--blue),
+    var(--magenta)
+  );
 }
 
 .schedule-info h2 {
-  margin-bottom: 8px;
+  margin-bottom: 9px;
+  color: var(--navy);
+  font-size: 1.4rem;
+  font-weight: 850;
+  letter-spacing: -.03em;
+}
+
+.schedule-info > p {
+  color: var(--muted);
 }
 
 .base-schedule {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
-  margin: 18px 0 12px;
-  padding: 14px 16px;
-  background: #f2f7ff;
+  gap: 14px;
+  margin: 19px 0 13px;
+  padding: 17px 19px;
+  background: linear-gradient(110deg, #eef8ff, #f5f8ff);
   border: 1px solid #dce9fb;
-  border-radius: 12px;
+  border-radius: 13px;
 }
 
 .base-schedule span {
   color: var(--muted);
-  font-size: .9rem;
+  font-size: .91rem;
+  font-weight: 600;
 }
 
 .base-schedule strong {
   color: var(--blue);
-  font-size: 1.15rem;
+  font-size: 1.25rem;
+  font-weight: 900;
 }
 
 .schedule-info .timezone-note {
-  font-size: .83rem;
-  line-height: 1.55;
+  margin-bottom: 0;
+  font-size: .85rem;
+  line-height: 1.7;
 }
 
-/* =========================================================
+/* =========================
    PIE DE PÁGINA
-   ========================================================= */
+   ========================= */
 
 .site-footer {
-  padding: 22px 18px;
-  color: rgba(255, 255, 255, .72);
+  padding: 24px 18px;
+  color: rgba(255,255,255,.75);
   background: var(--navy);
+  border-top: 1px solid rgba(39,217,242,.20);
   text-align: center;
-  font-size: .78rem;
+  font-size: .8rem;
 }
 
 .site-footer p {
   margin: 0;
 }
 
-/* =========================================================
-   ANIMACIÓN DEL RESULTADO
-   ========================================================= */
+/* =========================
+   ANIMACIÓN
+   ========================= */
 
 @keyframes result-in {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(12px);
   }
 
   to {
@@ -558,23 +623,9 @@ p {
   }
 }
 
-/* =========================================================
-   TABLET Y PANTALLAS MEDIANAS
-   ========================================================= */
-
-@media (min-width: 720px) {
-  .city-form {
-    grid-template-columns:
-      minmax(190px, .75fr)
-      minmax(260px, 1.25fr)
-      auto;
-  }
-
-  .primary-button {
-    grid-column: auto;
-    min-width: 180px;
-  }
-}
+/* =========================
+   TABLET
+   ========================= */
 
 @media (max-width: 1000px) {
   .topbar .nav {
@@ -583,13 +634,13 @@ p {
   }
 
   .topbar .nav-links {
-    gap: 15px;
+    gap: 14px;
   }
 }
 
-/* =========================================================
+/* =========================
    MÓVILES
-   ========================================================= */
+   ========================= */
 
 @media (max-width: 800px) {
   .topbar .nav-links {
@@ -621,39 +672,39 @@ p {
   }
 
   .topbar .brand span {
-    font-size: .95rem;
+    font-size: .94rem;
   }
 
   .topbar > .container > .btn {
-    padding: 10px 13px;
-    font-size: .82rem;
+    padding: 9px 11px;
+    font-size: .78rem;
   }
 
   .page-container {
-    width: min(100% - 26px, 900px);
-    padding: 42px 0 38px;
+    width: calc(100% - 26px);
+    padding: 44px 0 45px;
   }
 
   .intro {
-    margin-bottom: 24px;
+    margin-bottom: 29px;
   }
 
   .intro h1 {
-    font-size: clamp(1.8rem, 8vw, 2.4rem);
+    font-size: clamp(2rem, 9vw, 2.55rem);
   }
 
   .intro-text {
-    font-size: .95rem;
+    font-size: .96rem;
   }
 
   .schedule-card {
-    padding: 20px 17px;
-    border-radius: 18px;
+    padding: 25px 18px;
+    border-radius: 19px;
   }
 
   .city-form {
     grid-template-columns: 1fr;
-    gap: 14px;
+    gap: 16px;
   }
 
   .primary-button {
@@ -663,27 +714,33 @@ p {
 
   .schedule-result {
     padding: 18px;
+    border-radius: 16px;
+  }
+
+  .local-time-panel {
+    padding: 25px 14px 22px;
   }
 
   .time-value {
-    font-size: clamp(2.1rem, 10vw, 3rem);
+    font-size: clamp(2.4rem, 12vw, 3.2rem);
   }
 
   .argentina-time-panel,
   .base-schedule {
     align-items: flex-start;
     flex-direction: column;
-    gap: 5px;
+    gap: 6px;
   }
 
   .schedule-info {
-    padding: 22px 18px;
+    padding: 25px 20px;
+    border-radius: 18px;
   }
 }
 
-/* =========================================================
+/* =========================
    ACCESIBILIDAD
-   ========================================================= */
+   ========================= */
 
 @media (prefers-reduced-motion: reduce) {
   *,
