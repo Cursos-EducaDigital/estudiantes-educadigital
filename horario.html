@@ -92,21 +92,38 @@
 
         <div class="form-field">
 
-          <label for="city-search">Ciudad</label>
+  <label for="city-search">Ciudad</label>
 
-          <input
-            id="city-search"
-            name="city"
-            type="search"
-            list="city-options"
-            placeholder="Ej.: Miami, Orlando, Nueva York..."
-            aria-describedby="city-help"
-            required
-          >
+  <div class="city-autocomplete">
 
-          <datalist id="city-options"></datalist>
+    <input
+      id="city-search"
+      name="city"
+      type="search"
+      placeholder="Escribe tu ciudad..."
+      aria-describedby="city-help"
+      aria-autocomplete="list"
+      aria-controls="city-options"
+      aria-expanded="false"
+      autocomplete="off"
+      required
+    >
 
-        </div>
+    <div
+      id="city-options"
+      class="city-options"
+      role="listbox"
+      aria-label="Ciudades disponibles"
+      hidden
+    ></div>
+
+  </div>
+
+  <small id="city-help">
+    Escribe y busca tu ciudad.
+  </small>
+
+</div>
 
 
         <button
