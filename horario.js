@@ -2,16 +2,18 @@
 (() => {
   "use strict";
 
-  // =========================================================
-  // EDUCA DIGITAL - CONVERSOR DE HORARIOS
-  // Horario de clases: sábados y domingos a las 10:00 AM
-  // Hora de Argentina.
-  // =========================================================
+  /* =========================================================
+     EDUCA DIGITAL — CONVERSOR DE HORARIOS
+     Clases: sábados y domingos a las 10:00 de Argentina.
+     Conversión automática según la zona horaria de cada ciudad.
+     ========================================================= */
 
   const ARGENTINA_ZONE = "America/Argentina/Buenos_Aires";
 
-  // Ciudades principales y localidades representativas.
-  // Las zonas horarias IANA contemplan automáticamente el horario de verano.
+  // =========================================================
+  // CIUDADES Y ZONAS HORARIAS
+  // =========================================================
+
   const cityData = [
     ["Alabama","AL","America/Chicago","Birmingham;Montgomery;Mobile;Huntsville;Tuscaloosa;Hoover;Auburn;Dothan;Decatur;Madison"],
     ["Alaska","AK","America/Anchorage","Anchorage;Fairbanks;Juneau;Sitka;Ketchikan;Wasilla;Kenai;Kodiak;Bethel;Palmer"],
@@ -78,9 +80,9 @@
     ["Washington D. C.","DC","America/New_York","Washington"]
   ];
 
-  // =========================================================
-  // ELEMENTOS DEL HTML
-  // =========================================================
+  /* =========================================================
+     ELEMENTOS DEL HTML
+     ========================================================= */
 
   const stateSelect = document.getElementById("state-select");
   const cityInput = document.getElementById("city-search");
@@ -90,11 +92,10 @@
   const result = document.getElementById("schedule-result");
   const selectedLocation = document.getElementById("selected-location");
   const localTime = document.getElementById("local-time");
-  const argentinaTime = document.getElementById("argentina-time");
+  const classDays = document.querySelector(".class-days");
   const dateNote = document.getElementById("date-note");
   const yearElement = document.getElementById("current-year");
 
-  // Comprueba que el HTML tenga todos los elementos necesarios.
   const requiredElements = {
     stateSelect,
     cityInput,
@@ -104,7 +105,6 @@
     result,
     selectedLocation,
     localTime,
-    argentinaTime,
     dateNote
   };
 
@@ -120,9 +120,9 @@
     return;
   }
 
-  // =========================================================
-  // CONSTRUCCIÓN DE LA LISTA DE CIUDADES
-  // =========================================================
+  /* =========================================================
+     PREPARACIÓN DE CIUDADES
+     ========================================================= */
 
   const cities = [];
 
@@ -137,7 +137,6 @@
     });
   });
 
-  // Elimina registros exactamente repetidos.
   const uniqueCities = [
     ...new Map(
       cities.map(city => [
@@ -147,9 +146,9 @@
     ).values()
   ];
 
-  // =========================================================
-  // SELECTOR DE ESTADOS
-  // =========================================================
+  /* =========================================================
+     SELECTOR DE ESTADOS
+     ========================================================= */
 
   const stateNames = [
     ...new Set(uniqueCities.map(city => city.state))
@@ -162,7 +161,6 @@
     stateSelect.appendChild(option);
   });
 
-  // Normaliza textos para facilitar las búsquedas.
   function normalizeText(value) {
     return String(value || "")
       .normalize("NFD")
@@ -171,25 +169,18 @@
       .toLowerCase();
   }
 
-  // Actualiza las sugerencias según el estado seleccionado.
   function refreshCityOptions() {
     const chosenState = stateSelect.value;
 
     const filteredCities = uniqueCities
-      .filter(city => {
-        return !chosenState || city.state === chosenState;
-      })
+      .filter(city => !chosenState || city.state === chosenState)
       .sort((a, b) => a.name.localeCompare(b.name, "es"));
 
     cityOptions.replaceChildren();
 
     filteredCities.forEach(city => {
       const option = document.createElement("option");
-
-      // El estado forma parte del valor para distinguir
-      // ciudades que tienen el mismo nombre.
       option.value = `${city.name}, ${city.abbreviation}`;
-
       cityOptions.appendChild(option);
     });
   }
@@ -198,65 +189,47 @@
     cityInput.value = "";
     message.textContent = "";
     result.hidden = true;
-
     refreshCityOptions();
   });
 
-  // Carga inicial.
   refreshCityOptions();
 
   if (yearElement) {
-    yearElement.textContent = new Date().getFullYear();
+    yearElement.textContent = String(new Date().getFullYear());
   }
 
-  // =========================================================
-  // BÚSQUEDA DE CIUDADES
-  // =========================================================
+  /* =========================================================
+     BÚSQUEDA DE CIUDADES
+     ========================================================= */
 
   function findCity(input) {
     const rawInput = String(input || "").trim();
 
-    if (!rawInput) {
-      return null;
-    }
+    if (!rawInput) return null;
 
     const pieces = rawInput.split(",");
-
     const cityName = normalizeText(pieces[0]);
 
     const stateCode = pieces.length > 1
       ? pieces.slice(1).join(",").trim().toUpperCase()
       : "";
 
-    if (!cityName) {
-      return null;
-    }
+    if (!cityName) return null;
 
-    let matches = uniqueCities.filter(city => {
-      const sameName =
-        normalizeText(city.name) === cityName;
-
-      const sameState =
-        !stateCode || city.abbreviation === stateCode;
-
-      const selectedState =
-        !stateSelect.value || city.state === stateSelect.value;
+    const matches = uniqueCities.filter(city => {
+      const sameName = normalizeText(city.name) === cityName;
+      const sameState = !stateCode || city.abbreviation === stateCode;
+      const selectedState = !stateSelect.value || city.state === stateSelect.value;
 
       return sameName && sameState && selectedState;
     });
 
-    // Si no se especificó el estado y hay varias ciudades
-    // con el mismo nombre, no seleccionamos una al azar.
-    if (matches.length !== 1) {
-      return null;
-    }
-
-    return matches[0];
+    return matches.length === 1 ? matches[0] : null;
   }
 
-  // =========================================================
-  // FUNCIONES DE FECHA Y ZONA HORARIA
-  // =========================================================
+  /* =========================================================
+     FECHAS Y ZONAS HORARIAS
+     ========================================================= */
 
   function getDateParts(date, timeZone) {
     const parts = new Intl.DateTimeFormat("en-CA", {
@@ -288,16 +261,8 @@
     );
   }
 
-  // Transforma una hora local de una zona horaria
-  // en un instante UTC real.
-  function zonedTimeToUtc(
-    year,
-    month,
-    day,
-    hour,
-    minute,
-    timeZone
-  ) {
+  // Convierte una hora local de una zona horaria en un instante real.
+  function zonedTimeToUtc(year, month, day, hour, minute, timeZone) {
     const desiredUtc = Date.UTC(
       year,
       month - 1,
@@ -308,19 +273,10 @@
 
     let guess = desiredUtc;
 
-    // Ajusta la diferencia horaria usando las reglas IANA.
     for (let i = 0; i < 5; i++) {
       const currentDate = new Date(guess);
-
-      const actualDate = getDateParts(
-        currentDate,
-        timeZone
-      );
-
-      const actualTime = getTimeParts(
-        currentDate,
-        timeZone
-      );
+      const actualDate = getDateParts(currentDate, timeZone);
+      const actualTime = getTimeParts(currentDate, timeZone);
 
       const representedUtc = Date.UTC(
         actualDate.year,
@@ -332,9 +288,7 @@
 
       const difference = desiredUtc - representedUtc;
 
-      if (difference === 0) {
-        break;
-      }
+      if (difference === 0) break;
 
       guess += difference;
     }
@@ -354,17 +308,12 @@
     };
   }
 
-  // Encuentra la próxima fecha de clase en Argentina.
-  // 6 = sábado. 0 = domingo.
+  // 6 = sábado y 0 = domingo en el calendario argentino.
   function getNextClassDate(targetWeekday, now) {
     const today = getDateParts(now, ARGENTINA_ZONE);
 
     const todayUtc = new Date(
-      Date.UTC(
-        today.year,
-        today.month - 1,
-        today.day
-      )
+      Date.UTC(today.year, today.month - 1, today.day)
     );
 
     const currentWeekday = todayUtc.getUTCDay();
@@ -381,8 +330,6 @@
       ARGENTINA_ZONE
     );
 
-    // Si hoy es día de clase pero ya pasaron las 10:00,
-    // se muestra la próxima semana.
     if (
       daysUntil === 0 &&
       now.getTime() >= todayAtTen.getTime()
@@ -398,9 +345,9 @@
     );
   }
 
-  // =========================================================
-  // FORMATO DE FECHAS Y HORAS
-  // =========================================================
+  /* =========================================================
+     FORMATO DE FECHAS Y HORAS
+     ========================================================= */
 
   function formatTime(date, timeZone) {
     return new Intl.DateTimeFormat("es", {
@@ -420,9 +367,16 @@
     }).format(date);
   }
 
-  // =========================================================
-  // CONSULTA DEL HORARIO
-  // =========================================================
+  function formatWeekday(date, timeZone) {
+    return new Intl.DateTimeFormat("es", {
+      timeZone,
+      weekday: "long"
+    }).format(date);
+  }
+
+  /* =========================================================
+     CONSULTA DEL HORARIO
+     ========================================================= */
 
   form.addEventListener("submit", event => {
     event.preventDefault();
@@ -443,11 +397,11 @@
     try {
       const now = new Date();
 
-      // Próximas clases según el calendario argentino.
+      // Próximas clases en el calendario argentino.
       const saturday = getNextClassDate(6, now);
       const sunday = getNextClassDate(0, now);
 
-      // Las dos clases comienzan a las 10:00 AM de Argentina.
+      // Ambas clases comienzan a las 10:00 de Argentina.
       const saturdayInstant = zonedTimeToUtc(
         saturday.year,
         saturday.month,
@@ -466,13 +420,24 @@
         ARGENTINA_ZONE
       );
 
-      // Conversión automática a la hora local de la ciudad.
+      // Horarios de la ciudad seleccionada.
       const saturdayLocalTime = formatTime(
         saturdayInstant,
         city.timeZone
       );
 
       const sundayLocalTime = formatTime(
+        sundayInstant,
+        city.timeZone
+      );
+
+      // Días locales: pueden ser diferentes de sábado y domingo.
+      const saturdayLocalDay = formatWeekday(
+        saturdayInstant,
+        city.timeZone
+      );
+
+      const sundayLocalDay = formatWeekday(
         sundayInstant,
         city.timeZone
       );
@@ -487,39 +452,38 @@
         city.timeZone
       );
 
-      const saturdayArgentinaTime = formatTime(
-        saturdayInstant,
-        ARGENTINA_ZONE
-      );
+      const sameLocalTime =
+        saturdayLocalTime === sundayLocalTime;
 
-      const sundayArgentinaTime = formatTime(
-        sundayInstant,
-        ARGENTINA_ZONE
-      );
+      const sameLocalDay =
+        saturdayLocalDay === sundayLocalDay;
 
-      // Ciudad y estado.
+      // Nombre de la ciudad.
       selectedLocation.textContent =
         `${city.name}, ${city.abbreviation}`;
 
-      // Si el horario cambia entre sábado y domingo,
-      // mostramos ambos horarios por separado.
-      if (saturdayLocalTime === sundayLocalTime) {
+      // Si ambos horarios son iguales, se muestra una sola hora.
+      // Si cambian, se muestran por separado con sus días locales.
+      if (sameLocalTime && sameLocalDay) {
         localTime.textContent = saturdayLocalTime;
       } else {
         localTime.textContent =
-          `Sábado: ${saturdayLocalTime} · Domingo: ${sundayLocalTime}`;
+          `${saturdayLocalDay}: ${saturdayLocalTime} · ` +
+          `${sundayLocalDay}: ${sundayLocalTime}`;
       }
 
-      // Horario de Argentina.
-      argentinaTime.textContent =
-        `${saturdayArgentinaTime} ambos días`;
+      // Actualiza también el texto de los días de clase.
+      if (classDays) {
+        classDays.textContent = sameLocalDay
+          ? `Ambas clases: ${saturdayLocalDay}`
+          : `${saturdayLocalDay} y ${sundayLocalDay}`;
+      }
 
-      // Fechas de las próximas clases y zona aplicada.
+      // Fechas locales de las próximas clases.
       dateNote.textContent =
-        `Próximas clases: ${saturdayLocalDate} y ${sundayLocalDate}. ` +
-        `Horario de Argentina: sábado ${saturdayArgentinaTime} y ` +
-        `domingo ${sundayArgentinaTime}. ` +
-        `Zona horaria: ${city.timeZone}.`;
+        `Próximas clases en tu ciudad: ${saturdayLocalDate} y ${sundayLocalDate}. ` +
+        `Las clases corresponden al horario de las 10:00 a. m. de Argentina. ` +
+        `Zona horaria utilizada: ${city.timeZone}.`;
 
       message.textContent = "";
       result.hidden = false;
@@ -531,7 +495,7 @@
 
     } catch (error) {
       console.error(
-        "Error al calcular el horario:",
+        "Educa Digital: error al calcular el horario:",
         error
       );
 
