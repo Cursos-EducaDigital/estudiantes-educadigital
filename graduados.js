@@ -17,24 +17,7 @@ const DOCUMENTO_CONFIGURACION = ["configuracion", "graduados"];
 // Respaldo temporal de los 16 registros que ya estaban publicados.
 // Se muestran hasta que carga.html complete la migración inicial a Firestore.
 // No se escriben automáticamente desde esta página pública.
-const GRADUADOS_INICIALES = [
-  { codigo: "ED-00001", apellido: "Smith", nombre: "Michael", expedicion: "Noviembre 2026" },
-  { codigo: "ED-00002", apellido: "Miller", nombre: "Jessica", expedicion: "Noviembre 2026" },
-  { codigo: "ED-00003", apellido: "Johnson", nombre: "Emily", expedicion: "Noviembre 2026" },
-  { codigo: "ED-00004", apellido: "Anderson", nombre: "Joshua", expedicion: "Noviembre 2026" },
-  { codigo: "ED-00005", apellido: "Wilson", nombre: "Liam", expedicion: "Noviembre 2026" },
-  { codigo: "ED-00006", apellido: "Taylor", nombre: "Matthew", expedicion: "Noviembre 2026" },
-  { codigo: "ED-00007", apellido: "Davis", nombre: "Olivia", expedicion: "Noviembre 2026" },
-  { codigo: "ED-00008", apellido: "Brown", nombre: "Madison", expedicion: "Noviembre 2026" },
-  { codigo: "ED-00009", apellido: "Jones", nombre: "Christopher", expedicion: "Noviembre 2026" },
-  { codigo: "ED-00010", apellido: "Williams", nombre: "Ashley", expedicion: "Noviembre 2026" },
-  { codigo: "ED-00011", apellido: "Mendoza", nombre: "Valeria", expedicion: "Noviembre 2026" },
-  { codigo: "ED-00012", apellido: "Navarro", nombre: "Camila", expedicion: "Noviembre 2026" },
-  { codigo: "ED-00013", apellido: "Cárdenas", nombre: "Mateo", expedicion: "Noviembre 2026" },
-  { codigo: "ED-00014", apellido: "Benítez", nombre: "Emilio", expedicion: "Noviembre 2026" },
-  { codigo: "ED-00015", apellido: "Solís", nombre: "Andrés", expedicion: "Noviembre 2026" },
-  { codigo: "ED-00016", apellido: "Clark", nombre: "Brandon", expedicion: "Noviembre 2026" }
-];
+const GRADUADOS_INICIALES = [];
 
 const elementos = {
   lista: document.getElementById("graduados-lista"),
