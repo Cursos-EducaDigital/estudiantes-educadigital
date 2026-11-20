@@ -753,3 +753,107 @@ p {
     transition-duration: .01ms !important;
   }
 }
+
+/* =========================================================
+   BUSCADOR PERSONALIZADO DE CIUDADES
+   Compatible con PC y dispositivos móviles
+   ========================================================= */
+
+.city-autocomplete {
+  position: relative;
+  width: 100%;
+}
+
+.city-options[hidden] {
+  display: none !important;
+}
+
+.city-options {
+  position: absolute;
+  z-index: 1000;
+  top: calc(100% + 7px);
+  left: 0;
+  right: 0;
+
+  max-height: 270px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+
+  padding: 6px;
+
+  background: #0b2045;
+  border: 1px solid rgba(39, 217, 242, .4);
+  border-radius: 13px;
+
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, .35),
+    0 0 14px rgba(39, 217, 242, .08);
+}
+
+.city-option {
+  display: flex;
+  width: 100%;
+  min-height: 48px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+
+  padding: 11px 13px;
+
+  color: #fff;
+  background: transparent;
+  border: 0;
+  border-radius: 9px;
+
+  text-align: left;
+  font-family: inherit;
+  font-size: .92rem;
+
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.city-option + .city-option {
+  border-top: 1px solid rgba(255, 255, 255, .07);
+}
+
+.city-option:hover,
+.city-option.active {
+  background: rgba(37, 137, 255, .2);
+}
+
+.city-option:focus-visible {
+  outline: 2px solid #27d9f2;
+  outline-offset: -2px;
+}
+
+.city-option-name {
+  color: #fff;
+  font-weight: 750;
+}
+
+.city-option-state {
+  flex-shrink: 0;
+  color: #27d9f2;
+  font-size: .78rem;
+  font-weight: 700;
+}
+
+.city-option-empty {
+  padding: 16px 12px;
+  color: rgba(255, 255, 255, .75);
+  font-size: .86rem;
+  text-align: center;
+}
+
+@media (max-width: 560px) {
+  .city-options {
+    max-height: 240px;
+  }
+
+  .city-option {
+    min-height: 52px;
+    padding: 13px 12px;
+    font-size: .94rem;
+  }
+}
