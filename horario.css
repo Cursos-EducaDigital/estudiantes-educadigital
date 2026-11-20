@@ -665,3 +665,69 @@
     font-size: 2.15rem;
   }
 }
+
+
+.argentina-time-panel {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  margin-top: 16px;
+  padding: 20px;
+  border: 1px solid rgba(39, 217, 242, .12);
+  border-radius: 14px;
+  background: rgba(39, 137, 255, .045);
+}
+
+.schedule-note-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(39, 217, 242, .1);
+  color: var(--cyan);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.schedule-note-content {
+  min-width: 0;
+}
+
+.schedule-note-content strong {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--white);
+  font-size: .92rem;
+}
+
+.schedule-note-content p {
+  margin: 0;
+  color: var(--muted);
+  font-size: .84rem;
+  line-height: 1.7;
+}
+
+.schedule-note-content p + p {
+  margin-top: 10px;
+}
+
+.schedule-note-content a {
+  color: var(--cyan);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.schedule-note-content a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .argentina-time-panel {
+    padding: 16px;
+    gap: 11px;
+  }
+}
+
