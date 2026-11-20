@@ -131,7 +131,8 @@ body {
    ========================= */
 
 .page-container {
-  width: min(100% - 36px, 960px);
+  width: 95%;
+  max-width: none;
   margin: 0 auto;
   padding: 68px 0 70px;
 }
@@ -685,10 +686,10 @@ p {
     font-size: .78rem;
   }
 
-  .page-container {
-    width: calc(100% - 26px);
-    padding: 44px 0 45px;
-  }
+.page-container {
+  width: 95%;
+  padding: 44px 0 45px;
+}
 
   .intro {
     margin-bottom: 29px;
