@@ -1,7 +1,7 @@
 
 /* ==========================================================
    EDUCA DIGITAL — CONSULTA DE HORARIOS
-   Diseño visual renovado sobre la estética anterior.
+   Diseño oscuro basado en la identidad visual de la marca.
    ========================================================== */
 
 :root {
@@ -11,14 +11,16 @@
   --cyan: #27d9f2;
   --magenta: #ec4bbd;
 
-  --text: #17243a;
-  --muted: #65738a;
+  --text: #f2f7ff;
+  --muted: #a9bad2;
   --white: #ffffff;
-  --background: #f3f7fc;
-  --border: #dce5f0;
+  --background: #07152f;
+  --surface: #0b2045;
+  --surface-light: #102b52;
+  --border: rgba(128, 173, 220, .17);
 
-  --shadow-card: 0 18px 50px rgba(7, 21, 47, .09);
-  --shadow-soft: 0 8px 25px rgba(7, 21, 47, .06);
+  --shadow-card: 0 18px 50px rgba(0, 0, 0, .24);
+  --shadow-soft: 0 8px 25px rgba(0, 0, 0, .18);
 }
 
 /* =========================
@@ -38,17 +40,15 @@ body {
   min-height: 100vh;
   color: var(--text);
   background:
-    radial-gradient(circle at 8% 15%, rgba(39,217,242,.13), transparent 330px),
+    radial-gradient(circle at 8% 15%, rgba(39,217,242,.10), transparent 330px),
     radial-gradient(circle at 94% 25%, rgba(236,75,189,.09), transparent 310px),
-    linear-gradient(180deg, #f7faff 0%, #eef4fb 100%);
+    linear-gradient(145deg, #07152f 0%, #0b2045 55%, #07152f 100%);
   font-family: Inter, "Segoe UI", Arial, sans-serif;
   line-height: 1.6;
 }
 
 /* =========================
    HEADER DEL SITIO
-   Se conserva la identidad
-   del encabezado principal.
    ========================= */
 
 .topbar {
@@ -58,7 +58,7 @@ body {
   width: 100%;
   background: rgba(7, 21, 47, .97);
   border-bottom: 1px solid rgba(39, 217, 242, .25);
-  box-shadow: 0 5px 22px rgba(7, 21, 47, .12);
+  box-shadow: 0 5px 22px rgba(0, 0, 0, .18);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 }
@@ -157,9 +157,9 @@ body {
   gap: 8px;
   margin: 0 0 17px;
   padding: 7px 15px;
-  color: #087f9b;
-  background: rgba(39, 217, 242, .14);
-  border: 1px solid rgba(39, 217, 242, .36);
+  color: var(--cyan);
+  background: rgba(39, 217, 242, .09);
+  border: 1px solid rgba(39, 217, 242, .28);
   border-radius: 50px;
   font-size: .72rem;
   font-weight: 850;
@@ -184,7 +184,7 @@ p {
 .intro h1 {
   max-width: 730px;
   margin: 0 auto 16px;
-  color: var(--navy);
+  color: var(--white);
   font-size: clamp(2.2rem, 5vw, 3.45rem);
   font-weight: 850;
   line-height: 1.1;
@@ -207,8 +207,8 @@ p {
   position: relative;
   overflow: hidden;
   padding: clamp(25px, 5vw, 44px);
-  background: var(--white);
-  border: 1px solid rgba(220,229,240,.95);
+  background: linear-gradient(145deg, #10294f, #0b2045);
+  border: 1px solid rgba(39,217,242,.16);
   border-radius: 25px;
   box-shadow: var(--shadow-card);
 }
@@ -234,7 +234,7 @@ p {
 
 .section-heading h2 {
   margin-bottom: 8px;
-  color: var(--navy);
+  color: var(--white);
   font-size: clamp(1.3rem, 3vw, 1.6rem);
   font-weight: 850;
   letter-spacing: -.035em;
@@ -265,7 +265,7 @@ p {
 }
 
 .form-field label {
-  color: var(--navy);
+  color: #eaf5ff;
   font-size: .9rem;
   font-weight: 800;
 }
@@ -275,39 +275,39 @@ p {
   width: 100%;
   min-height: 55px;
   padding: 0 16px;
-  color: var(--text);
-  background: #f8fbff;
-  border: 1px solid #d5e0ed;
+  color: var(--white);
+  background: #071a38;
+  border: 1px solid rgba(128,173,220,.27);
   border-radius: 13px;
   outline: none;
   font-family: inherit;
   font-size: .94rem;
+  color-scheme: dark;
   transition:
     border-color .2s ease,
     background .2s ease,
-    box-shadow .2s ease,
-    transform .2s ease;
+    box-shadow .2s ease;
 }
 
 .form-field input:hover,
 .form-field select:hover {
-  background: #fff;
-  border-color: #a9c7e9;
+  background: #0a2042;
+  border-color: rgba(39,217,242,.45);
 }
 
 .form-field input:focus,
 .form-field select:focus {
-  background: #fff;
-  border-color: var(--blue);
-  box-shadow: 0 0 0 4px rgba(37,137,255,.13);
+  background: #0a2042;
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 4px rgba(39,217,242,.12);
 }
 
 .form-field input::placeholder {
-  color: #9aa8ba;
+  color: #8298b6;
 }
 
 .form-field small {
-  color: var(--muted);
+  color: #9db1cb;
   font-size: .78rem;
   line-height: 1.45;
 }
@@ -330,7 +330,7 @@ p {
     #1765d1 58%,
     #514bd3 100%
   );
-  border: 0;
+  border: 1px solid rgba(255,255,255,.12);
   border-radius: 13px;
   box-shadow: 0 9px 22px rgba(37,137,255,.23);
   cursor: pointer;
@@ -344,8 +344,8 @@ p {
 }
 
 .primary-button:hover {
-  filter: brightness(1.07);
-  box-shadow: 0 13px 27px rgba(37,137,255,.30);
+  filter: brightness(1.12);
+  box-shadow: 0 13px 27px rgba(37,137,255,.35);
   transform: translateY(-2px);
 }
 
@@ -365,7 +365,7 @@ p {
 .form-message {
   min-height: 1.4em;
   margin: 12px 0 0;
-  color: #b42318;
+  color: #ff9b9b;
   font-size: .88rem;
 }
 
@@ -380,8 +380,8 @@ p {
   overflow: hidden;
   background:
     radial-gradient(circle at 100% 0%, rgba(236,75,189,.10), transparent 230px),
-    linear-gradient(135deg, #eafaff 0%, #f5f8ff 58%, #fff7fd 100%);
-  border: 1px solid rgba(39,217,242,.38);
+    linear-gradient(135deg, #102e53 0%, #0c2549 58%, #172449 100%);
+  border: 1px solid rgba(39,217,242,.28);
   border-radius: 20px;
   animation: result-in .35s ease both;
 }
@@ -392,7 +392,7 @@ p {
 
 .result-kicker {
   margin-bottom: 5px;
-  color: #0785a2;
+  color: var(--cyan);
   font-size: .72rem;
   font-weight: 900;
   letter-spacing: .14em;
@@ -400,7 +400,7 @@ p {
 
 .schedule-result h2 {
   margin-bottom: 22px;
-  color: var(--navy);
+  color: var(--white);
   font-size: clamp(1.35rem, 3vw, 1.65rem);
   font-weight: 850;
   letter-spacing: -.035em;
@@ -421,7 +421,7 @@ p {
     linear-gradient(125deg, #07152f 0%, #0b2045 55%, #123e70 100%);
   border: 1px solid rgba(39,217,242,.28);
   border-radius: 17px;
-  box-shadow: 0 13px 28px rgba(7,21,47,.18);
+  box-shadow: 0 13px 28px rgba(0,0,0,.2);
 }
 
 .local-time-panel::before,
@@ -451,7 +451,7 @@ p {
   position: relative;
   z-index: 1;
   display: block;
-  color: rgba(255,255,255,.77);
+  color: #bdcce0;
   font-size: .9rem;
   font-weight: 600;
 }
@@ -488,8 +488,8 @@ p {
   gap: 16px;
   margin-top: 15px;
   padding: 17px 19px;
-  background: rgba(255,255,255,.88);
-  border: 1px solid #dce5f0;
+  background: #0b2045;
+  border: 1px solid rgba(128,173,220,.20);
   border-radius: 14px;
 }
 
@@ -499,7 +499,7 @@ p {
 }
 
 .argentina-time-panel strong {
-  color: var(--navy);
+  color: var(--cyan);
   font-size: 1.08rem;
   font-weight: 850;
 }
@@ -513,7 +513,7 @@ p {
 
 .date-note {
   margin: 16px 0 0;
-  color: var(--muted);
+  color: #a9bad2;
   font-size: .84rem;
   line-height: 1.6;
 }
@@ -527,8 +527,8 @@ p {
   margin-top: 25px;
   padding: clamp(25px, 4vw, 34px);
   overflow: hidden;
-  background: #fff;
-  border: 1px solid rgba(220,229,240,.95);
+  background: linear-gradient(145deg, #10294f, #0b2045);
+  border: 1px solid rgba(39,217,242,.16);
   border-radius: 22px;
   box-shadow: var(--shadow-soft);
 }
@@ -550,7 +550,7 @@ p {
 
 .schedule-info h2 {
   margin-bottom: 9px;
-  color: var(--navy);
+  color: var(--white);
   font-size: 1.4rem;
   font-weight: 850;
   letter-spacing: -.03em;
@@ -567,8 +567,8 @@ p {
   gap: 14px;
   margin: 19px 0 13px;
   padding: 17px 19px;
-  background: linear-gradient(110deg, #eef8ff, #f5f8ff);
-  border: 1px solid #dce9fb;
+  background: #071a38;
+  border: 1px solid rgba(39,217,242,.18);
   border-radius: 13px;
 }
 
@@ -579,13 +579,14 @@ p {
 }
 
 .base-schedule strong {
-  color: var(--blue);
+  color: var(--cyan);
   font-size: 1.25rem;
   font-weight: 900;
 }
 
 .schedule-info .timezone-note {
   margin-bottom: 0;
+  color: #a9bad2;
   font-size: .85rem;
   line-height: 1.7;
 }
@@ -597,7 +598,7 @@ p {
 .site-footer {
   padding: 24px 18px;
   color: rgba(255,255,255,.75);
-  background: var(--navy);
+  background: #050f23;
   border-top: 1px solid rgba(39,217,242,.20);
   text-align: center;
   font-size: .8rem;
