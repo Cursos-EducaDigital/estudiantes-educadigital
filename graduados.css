@@ -3,8 +3,107 @@
    EDUCA DIGITAL - PÁGINA DE GRADUADOS
    ========================================= */
 
+:root {
+    --navy: #07152f;
+    --navy2: #0b2045;
+    --cyan: #27d9f2;
+    --blue: #2589ff;
+    --pink: #ec4bbd;
+    --white: #f7fbff;
+    --muted: #bdcce0;
+
+    --line: rgba(160, 205, 255, .18);
+    --panel: linear-gradient(
+        145deg,
+        rgba(17, 42, 82, .88),
+        rgba(8, 25, 54, .94)
+    );
+    --shadow: 0 20px 60px rgba(0, 0, 0, .25);
+}
+
+
+/* =========================================
+   HEADER OFICIAL
+   ========================================= */
+
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.topbar .nav {
+    min-height: 76px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.topbar .brand {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    color: var(--white);
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.topbar .brand img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    border-radius: 12px;
+}
+
+.topbar .brand span {
+    color: var(--white);
+    font-size: 1.08rem;
+    font-weight: 800;
+    letter-spacing: .3px;
+}
+
+.topbar .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.topbar .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: .92rem;
+    white-space: nowrap;
+    transition: color .2s ease;
+}
+
+.topbar .nav-links a:hover,
+.topbar .nav-links a[aria-current="page"] {
+    color: var(--cyan);
+}
+
+.topbar > .container > .btn {
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+
+/* =========================================
+   ESTRUCTURA GENERAL
+   ========================================= */
+
 .graduados-main {
     min-height: 65vh;
+}
+
+.graduados-main section {
+    margin: 0;
+}
+
+.graduados-main .container {
+    width: min(1120px, calc(100% - 40px));
+    margin: 0 auto;
 }
 
 
@@ -16,13 +115,28 @@
     padding: 75px 0 45px;
     text-align: center;
     background:
-        radial-gradient(circle at 50% 0%, rgba(39,217,242,.13), transparent 28rem);
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(39, 217, 242, .13),
+            transparent 28rem
+        );
+}
+
+.graduados-eyebrow,
+.graduados-section-label {
+    display: inline-block;
+    color: var(--cyan);
+    font-size: .76rem;
+    font-weight: 800;
+    letter-spacing: .15em;
+    text-transform: uppercase;
 }
 
 .graduados-hero h1 {
     font-size: clamp(2.4rem, 5vw, 4rem);
     line-height: 1.1;
     margin: 15px 0;
+    letter-spacing: -.045em;
 }
 
 .graduados-hero p {
@@ -30,6 +144,7 @@
     margin: 0 auto;
     color: var(--muted);
     font-size: 1.08rem;
+    line-height: 1.7;
 }
 
 
@@ -56,11 +171,13 @@
 .graduados-heading h2 {
     font-size: clamp(1.5rem, 3vw, 2rem);
     margin: 8px 0;
+    color: var(--white);
 }
 
 .graduados-heading p {
     color: var(--muted);
     margin: 0;
+    line-height: 1.6;
 }
 
 
@@ -75,16 +192,16 @@
     max-width: 560px;
     min-height: 52px;
     margin-bottom: 25px;
-    border: 1px solid rgba(39,217,242,.4);
+    border: 1px solid rgba(39, 217, 242, .4);
     border-radius: 9px;
     overflow: hidden;
-    background: rgba(3,14,34,.65);
+    background: rgba(3, 14, 34, .65);
     transition: border-color .2s ease, box-shadow .2s ease;
 }
 
 .graduados-search:focus-within {
     border-color: var(--cyan);
-    box-shadow: 0 0 0 3px rgba(39,217,242,.12);
+    box-shadow: 0 0 0 3px rgba(39, 217, 242, .12);
 }
 
 .graduados-search input {
@@ -109,21 +226,24 @@
 }
 
 .graduados-search button {
+    display: grid;
+    place-items: center;
     width: 50px;
     height: 52px;
     flex-shrink: 0;
     border: 0;
     border-left: 1px solid var(--line);
     color: var(--cyan);
-    background: rgba(39,217,242,.07);
-    font-size: 1.15rem;
+    background: rgba(39, 217, 242, .07);
+    font-size: 1.6rem;
+    line-height: 1;
     cursor: pointer;
     transition: .2s ease;
 }
 
 .graduados-search button:hover:not(:disabled) {
     color: var(--white);
-    background: rgba(39,217,242,.2);
+    background: rgba(39, 217, 242, .2);
 }
 
 .graduados-search button:disabled {
@@ -147,9 +267,22 @@
     font-size: .9rem;
 }
 
-#pagina-info {
+#total-graduados {
     color: var(--cyan);
     font-weight: 700;
+}
+
+#estado-firebase {
+    font-size: .82rem;
+    text-align: right;
+}
+
+#estado-firebase[data-estado="ok"] {
+    color: #78e6b1;
+}
+
+#estado-firebase[data-estado="error"] {
+    color: #ff9b9b;
 }
 
 
@@ -162,7 +295,7 @@
     overflow-x: auto;
     border: 1px solid var(--line);
     border-radius: 13px;
-    background: rgba(3,14,34,.35);
+    background: rgba(3, 14, 34, .35);
 }
 
 .graduados-table {
@@ -175,9 +308,9 @@
 .graduados-table thead {
     background: linear-gradient(
         100deg,
-        rgba(39,217,242,.15),
-        rgba(37,137,255,.16),
-        rgba(236,75,189,.10)
+        rgba(39, 217, 242, .15),
+        rgba(37, 137, 255, .16),
+        rgba(236, 75, 189, .10)
     );
 }
 
@@ -188,7 +321,7 @@
     font-weight: 800;
     letter-spacing: .4px;
     text-transform: uppercase;
-    border-bottom: 1px solid rgba(39,217,242,.25);
+    border-bottom: 1px solid rgba(39, 217, 242, .25);
     white-space: nowrap;
 }
 
@@ -196,7 +329,7 @@
     padding: 15px 20px;
     color: var(--white);
     font-size: .95rem;
-    border-bottom: 1px solid rgba(160,205,255,.10);
+    border-bottom: 1px solid rgba(160, 205, 255, .10);
 }
 
 .graduados-table tbody tr {
@@ -204,11 +337,11 @@
 }
 
 .graduados-table tbody tr:nth-child(even) {
-    background: rgba(39,217,242,.035);
+    background: rgba(39, 217, 242, .035);
 }
 
 .graduados-table tbody tr:hover {
-    background: rgba(39,217,242,.09);
+    background: rgba(39, 217, 242, .09);
 }
 
 .graduados-table tbody tr:last-child td {
@@ -216,7 +349,8 @@
 }
 
 
-/* Columna del código */
+/* Código del graduado */
+
 .graduados-table td:first-child {
     color: var(--cyan);
     font-weight: 800;
@@ -224,7 +358,8 @@
 }
 
 
-/* Columna de expedición */
+/* Fecha de graduación */
+
 .graduados-table td:last-child {
     color: #c6d5e9;
     white-space: nowrap;
@@ -232,6 +367,7 @@
 
 
 /* Mensajes de tabla vacía */
+
 .graduados-table .graduados-empty {
     padding: 38px 20px;
     text-align: center;
@@ -250,6 +386,7 @@
     align-items: center;
     gap: 20px;
     margin-top: 27px;
+    flex-wrap: wrap;
 }
 
 .pagination-btn {
@@ -259,10 +396,10 @@
     gap: 8px;
     min-width: 125px;
     padding: 11px 17px;
-    border: 1px solid rgba(39,217,242,.45);
+    border: 1px solid rgba(39, 217, 242, .45);
     border-radius: 999px;
     color: var(--white);
-    background: rgba(39,217,242,.07);
+    background: rgba(39, 217, 242, .07);
     font-size: .9rem;
     font-weight: 700;
     cursor: pointer;
@@ -281,24 +418,74 @@
     cursor: not-allowed;
 }
 
-#pagina-actual {
-    display: grid;
-    place-items: center;
-    min-width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    color: #041629;
-    background: linear-gradient(135deg, var(--cyan), #8cecff);
-    font-weight: 900;
-    box-shadow: 0 5px 18px rgba(39,217,242,.18);
+.pagination-page-info {
+    color: var(--muted);
+    font-size: .9rem;
+    min-width: 105px;
+    text-align: center;
+}
+
+/* El JS utiliza este elemento para actualizar el número.
+   Se conserva accesible sin duplicar visualmente la página. */
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 
 
 /* =========================================
-   ADAPTACIÓN PARA MÓVILES
+   PIE DE PÁGINA
+   ========================================= */
+
+.graduados-footer {
+    padding: 25px 0;
+    border-top: 1px solid var(--line);
+    background: rgba(3, 14, 34, .35);
+    text-align: center;
+}
+
+.graduados-footer p {
+    margin: 0 0 7px;
+    color: #a9bdd7;
+    font-size: .85rem;
+}
+
+.graduados-footer span {
+    color: #8298b8;
+    font-size: .78rem;
+}
+
+
+/* =========================================
+   ADAPTACIÓN PARA TABLETS
    ========================================= */
 
 @media (max-width: 800px) {
+
+    .topbar .nav {
+        padding: 12px 0;
+        flex-wrap: wrap;
+    }
+
+    .topbar .nav-links {
+        order: 3;
+        width: 100%;
+        overflow-x: auto;
+        gap: 18px;
+        padding: 5px 0;
+    }
+
+    .topbar .nav-links a {
+        white-space: nowrap;
+    }
 
     .graduados-hero {
         padding: 55px 0 35px;
@@ -314,7 +501,34 @@
 
 }
 
+
+/* =========================================
+   ADAPTACIÓN PARA MÓVILES
+   ========================================= */
+
 @media (max-width: 560px) {
+
+    .topbar .nav {
+        gap: 12px;
+    }
+
+    .topbar .brand img {
+        width: 42px;
+        height: 42px;
+    }
+
+    .topbar .brand span {
+        font-size: .95rem;
+    }
+
+    .topbar > .container > .btn {
+        padding: 10px 13px;
+        font-size: .82rem;
+    }
+
+    .graduados-main .container {
+        width: min(100% - 24px, 1120px);
+    }
 
     .graduados-hero {
         padding: 45px 0 30px;
@@ -344,6 +558,13 @@
 
     .graduados-info {
         font-size: .82rem;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 7px;
+    }
+
+    #estado-firebase {
+        text-align: left;
     }
 
     .graduados-pagination {
@@ -354,11 +575,6 @@
         min-width: 0;
         padding: 10px 13px;
         font-size: .82rem;
-    }
-
-    #pagina-actual {
-        min-width: 34px;
-        height: 34px;
     }
 
 }
