@@ -150,83 +150,247 @@
      SELECTOR DE ESTADOS
      ========================================================= */
 
-  const stateNames = [
-    ...new Set(uniqueCities.map(city => city.state))
-  ].sort((a, b) => a.localeCompare(b, "es"));
+  /* =========================================================
+   SELECTOR DE ESTADOS Y BUSCADOR DE CIUDADES
+   ========================================================= */
 
-  stateNames.forEach(state => {
-    const option = document.createElement("option");
-    option.value = state;
-    option.textContent = state;
-    stateSelect.appendChild(option);
-  });
+const stateNames = [
+  ...new Set(uniqueCities.map(city => city.state))
+].sort((a, b) => a.localeCompare(b, "es"));
 
-  function normalizeText(value) {
-    return String(value || "")
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .trim()
-      .toLowerCase();
-  }
+stateNames.forEach(state => {
+  const option = document.createElement("option");
+  option.value = state;
+  option.textContent = state;
+  stateSelect.appendChild(option);
+});
 
-  function refreshCityOptions() {
-    const chosenState = stateSelect.value;
+function normalizeText(value) {
+  return String(value || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim()
+    .toLowerCase();
+}
 
-    const filteredCities = uniqueCities
-      .filter(city => !chosenState || city.state === chosenState)
-      .sort((a, b) => a.name.localeCompare(b.name, "es"));
+let selectedCity = null;
+let visibleCities = [];
+let activeCityIndex = -1;
 
-    cityOptions.replaceChildren();
+function getAvailableCities() {
+  const chosenState = stateSelect.value;
 
-    filteredCities.forEach(city => {
-      const option = document.createElement("option");
-      option.value = `${city.name}, ${city.abbreviation}`;
+  return uniqueCities
+    .filter(city => !chosenState || city.abbreviation === chosenState)
+    .sort((a, b) => a.name.localeCompare(b.name, "es"));
+}
+
+function closeCityOptions() {
+  cityOptions.hidden = true;
+  cityInput.setAttribute("aria-expanded", "false");
+  activeCityIndex = -1;
+}
+
+function selectCity(city) {
+  selectedCity = city;
+
+  cityInput.value = `${city.name}, ${city.abbreviation}`;
+
+  closeCityOptions();
+
+  message.textContent = "";
+  result.hidden = true;
+}
+
+function renderCityOptions(search = "") {
+  const query = normalizeText(search);
+
+  const availableCities = getAvailableCities();
+
+  visibleCities = query
+    ? availableCities.filter(city => {
+        const cityName = normalizeText(city.name);
+        const stateName = normalizeText(city.state);
+        const abbreviation = normalizeText(city.abbreviation);
+
+        return (
+          cityName.includes(query) ||
+          stateName.includes(query) ||
+          abbreviation === query
+        );
+      })
+    : availableCities;
+
+  cityOptions.replaceChildren();
+  activeCityIndex = -1;
+
+  if (visibleCities.length === 0) {
+    const empty = document.createElement("div");
+    empty.className = "city-option-empty";
+    empty.textContent = "No encontramos ciudades con ese nombre.";
+    cityOptions.appendChild(empty);
+  } else {
+    // Mostrar un máximo de 10 sugerencias a la vez.
+    visibleCities.slice(0, 10).forEach((city, index) => {
+      const option = document.createElement("button");
+
+      option.type = "button";
+      option.className = "city-option";
+      option.setAttribute("role", "option");
+      option.setAttribute("aria-selected", "false");
+
+      const cityName = document.createElement("span");
+      cityName.className = "city-option-name";
+      cityName.textContent = city.name;
+
+      const stateName = document.createElement("span");
+      stateName.className = "city-option-state";
+      stateName.textContent = `${city.state} (${city.abbreviation})`;
+
+      option.append(cityName, stateName);
+
+      option.addEventListener("click", () => {
+        selectCity(city);
+      });
+
       cityOptions.appendChild(option);
     });
   }
 
-  stateSelect.addEventListener("change", () => {
-    cityInput.value = "";
-    message.textContent = "";
-    result.hidden = true;
-    refreshCityOptions();
+  cityOptions.hidden = false;
+  cityInput.setAttribute("aria-expanded", "true");
+}
+
+cityInput.addEventListener("focus", () => {
+  renderCityOptions(cityInput.value);
+});
+
+cityInput.addEventListener("input", () => {
+  selectedCity = null;
+  message.textContent = "";
+  result.hidden = true;
+
+  renderCityOptions(cityInput.value);
+});
+
+cityInput.addEventListener("keydown", event => {
+  const options = [
+    ...cityOptions.querySelectorAll(".city-option")
+  ];
+
+  if (event.key === "ArrowDown") {
+    event.preventDefault();
+
+    if (cityOptions.hidden) {
+      renderCityOptions(cityInput.value);
+      return;
+    }
+
+    if (options.length === 0) return;
+
+    activeCityIndex = Math.min(
+      activeCityIndex + 1,
+      options.length - 1
+    );
+
+    updateActiveCity(options);
+  }
+
+  if (event.key === "ArrowUp") {
+    event.preventDefault();
+
+    if (options.length === 0) return;
+
+    activeCityIndex = Math.max(
+      activeCityIndex - 1,
+      0
+    );
+
+    updateActiveCity(options);
+  }
+
+  if (event.key === "Enter" && !cityOptions.hidden) {
+    if (activeCityIndex >= 0 && options[activeCityIndex]) {
+      event.preventDefault();
+      options[activeCityIndex].click();
+    } else if (options.length === 1) {
+      event.preventDefault();
+      options[0].click();
+    }
+  }
+
+  if (event.key === "Escape") {
+    closeCityOptions();
+  }
+});
+
+function updateActiveCity(options) {
+  options.forEach((option, index) => {
+    const active = index === activeCityIndex;
+
+    option.classList.toggle("active", active);
+    option.setAttribute("aria-selected", String(active));
   });
 
-  refreshCityOptions();
+  options[activeCityIndex]?.scrollIntoView({
+    block: "nearest"
+  });
+}
 
-  if (yearElement) {
-    yearElement.textContent = String(new Date().getFullYear());
+// Al cambiar de estado, limpiar la búsqueda anterior.
+stateSelect.addEventListener("change", () => {
+  cityInput.value = "";
+  selectedCity = null;
+
+  message.textContent = "";
+  result.hidden = true;
+
+  closeCityOptions();
+});
+
+// Cerrar las sugerencias cuando se toca fuera del buscador.
+document.addEventListener("pointerdown", event => {
+  if (!event.target.closest(".city-autocomplete")) {
+    closeCityOptions();
   }
+});
 
-  /* =========================================================
-     BÚSQUEDA DE CIUDADES
-     ========================================================= */
+// Año del pie de página.
+if (yearElement) {
+  yearElement.textContent = String(new Date().getFullYear());
+}
 
-  function findCity(input) {
-    const rawInput = String(input || "").trim();
+/* =========================================================
+   BÚSQUEDA Y VALIDACIÓN DE CIUDADES
+   ========================================================= */
 
-    if (!rawInput) return null;
+function findCity(input) {
+  const rawInput = String(input || "").trim();
 
-    const pieces = rawInput.split(",");
-    const cityName = normalizeText(pieces[0]);
+  if (!rawInput) return null;
 
-    const stateCode = pieces.length > 1
-      ? pieces.slice(1).join(",").trim().toUpperCase()
-      : "";
+  const pieces = rawInput.split(",");
 
-    if (!cityName) return null;
+  const cityName = normalizeText(pieces[0]);
 
-    const matches = uniqueCities.filter(city => {
-      const sameName = normalizeText(city.name) === cityName;
-      const sameState = !stateCode || city.abbreviation === stateCode;
-      const selectedState = !stateSelect.value || city.state === stateSelect.value;
+  const stateCode = pieces.length > 1
+    ? pieces.slice(1).join(",").trim().toUpperCase()
+    : "";
 
-      return sameName && sameState && selectedState;
-    });
+  if (!cityName) return null;
 
-    return matches.length === 1 ? matches[0] : null;
-  }
+  const matches = getAvailableCities().filter(city => {
+    const sameName =
+      normalizeText(city.name) === cityName;
 
+    const sameState =
+      !stateCode || city.abbreviation === stateCode;
+
+    return sameName && sameState;
+  });
+
+  return matches.length === 1 ? matches[0] : null;
+}
   /* =========================================================
      FECHAS Y ZONAS HORARIAS
      ========================================================= */
