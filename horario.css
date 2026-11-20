@@ -1,18 +1,76 @@
 
 /* =========================================================
-   EDUCA DIGITAL - CONVERSOR DE HORARIOS
-   Diseño general e integración con el sitio principal
+   EDUCA DIGITAL — PÁGINA DE HORARIOS
+   Diseño recuperado y adaptado a la identidad de marca.
    ========================================================= */
 
+:root {
+  --navy: #07152f;
+  --blue-deep: #0b2045;
+  --blue: #2589ff;
+  --cyan: #27d9f2;
+  --magenta: #ec4bbd;
+
+  --text: #17243a;
+  --muted: #65738a;
+  --surface: #ffffff;
+  --background: #f3f7fc;
+  --border: #dce5f0;
+
+  --shadow: 0 18px 55px rgba(7, 21, 47, .09);
+}
 
 /* =========================================================
-   1. ENCABEZADO PRINCIPAL
+   CONFIGURACIÓN GENERAL
+   ========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text);
+  background:
+    radial-gradient(
+      ellipse at 10% 0%,
+      rgba(39, 217, 242, .10),
+      transparent 34rem
+    ),
+    radial-gradient(
+      ellipse at 95% 12%,
+      rgba(236, 75, 189, .07),
+      transparent 30rem
+    ),
+    var(--background);
+  font-family: Inter, Arial, sans-serif;
+  line-height: 1.6;
+}
+
+/* =========================================================
+   ENCABEZADO OFICIAL EDUCA DIGITAL
+   Utiliza el header compartido con index.html.
    ========================================================= */
 
 .topbar {
   position: sticky;
   top: 0;
-  z-index: 20;
+  z-index: 100;
+  width: 100%;
+  background: rgba(7, 21, 47, .96);
+  border-bottom: 1px solid rgba(39, 217, 242, .22);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.topbar .container {
+  width: min(1120px, calc(100% - 40px));
+  margin: 0 auto;
 }
 
 .topbar .nav {
@@ -20,7 +78,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
+  gap: 22px;
 }
 
 .topbar .brand {
@@ -28,20 +86,20 @@
   flex-direction: row;
   align-items: center;
   gap: 12px;
-  color: var(--white);
-  text-decoration: none;
   flex-shrink: 0;
+  color: #f7fbff;
+  text-decoration: none;
 }
 
 .topbar .brand img {
   width: 48px;
   height: 48px;
   object-fit: contain;
-  border-radius: 12px;
+  border-radius: 10px;
 }
 
 .topbar .brand span {
-  color: var(--white);
+  color: #f7fbff;
   font-size: 1.08rem;
   font-weight: 800;
   letter-spacing: .3px;
@@ -50,13 +108,14 @@
 .topbar .nav-links {
   display: flex;
   align-items: center;
-  gap: 20px;
+  justify-content: center;
+  gap: 19px;
 }
 
 .topbar .nav-links a {
-  color: var(--muted);
+  color: #bdcce0;
   text-decoration: none;
-  font-size: .9rem;
+  font-size: .88rem;
   white-space: nowrap;
   transition: color .2s ease;
 }
@@ -69,213 +128,203 @@
 .topbar .btn {
   flex-shrink: 0;
   white-space: nowrap;
+  text-decoration: none;
 }
 
-
 /* =========================================================
-   2. CONTENEDOR PRINCIPAL
+   CONTENIDO PRINCIPAL
    ========================================================= */
 
 .page-container {
-  width: min(1000px, calc(100% - 40px));
+  width: min(100% - 36px, 900px);
   margin: 0 auto;
-  padding: 65px 0 75px;
+  padding: 64px 0 58px;
 }
+
+/* Evita que el padding global de estilos.css
+   altere la distribución de esta página. */
 
 .page-container > section {
   padding: 0;
 }
 
-
 /* =========================================================
-   3. PRESENTACIÓN
+   PRESENTACIÓN
    ========================================================= */
 
 .intro {
+  max-width: 720px;
+  margin: 0 auto 32px;
   text-align: center;
-  max-width: 760px;
-  margin: 0 auto 42px;
 }
 
 .eyebrow {
   display: inline-block;
-  margin: 0 0 15px;
-  padding: 8px 17px;
-  border: 1px solid rgba(39, 217, 242, .3);
-  border-radius: 30px;
-  background: rgba(39, 217, 242, .08);
-  color: var(--cyan);
-  font-size: .76rem;
+  margin: 0 0 12px;
+  padding: 5px 13px;
+  color: #087f9b;
+  background: rgba(39, 217, 242, .13);
+  border: 1px solid rgba(39, 217, 242, .32);
+  border-radius: 999px;
+  font-size: .72rem;
   font-weight: 800;
-  letter-spacing: 2px;
+  letter-spacing: .13em;
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
 }
 
 .intro h1 {
-  margin: 0;
-  color: var(--white);
-  font-size: clamp(2rem, 5vw, 3.1rem);
-  line-height: 1.15;
-  letter-spacing: -1.2px;
+  margin-bottom: 13px;
+  color: var(--navy);
+  font-size: clamp(2rem, 5vw, 3.15rem);
+  line-height: 1.12;
+  letter-spacing: -.045em;
 }
 
 .intro-text {
-  max-width: 660px;
-  margin: 18px auto 0;
+  max-width: 630px;
+  margin: 0 auto;
   color: var(--muted);
   font-size: 1.05rem;
-  line-height: 1.8;
 }
 
-
 /* =========================================================
-   4. TARJETA PRINCIPAL DEL CONVERSOR
+   TARJETAS PRINCIPALES
    ========================================================= */
 
-.schedule-card {
-  position: relative;
-  overflow: hidden;
-  padding: 38px;
-  border: 1px solid rgba(39, 217, 242, .18);
+.schedule-card,
+.schedule-info {
+  border: 1px solid rgba(220, 229, 240, .95);
   border-radius: 22px;
-  background:
-    radial-gradient(
-      circle at 100% 0%,
-      rgba(37, 137, 255, .13),
-      transparent 35%
-    ),
-    linear-gradient(
-      145deg,
-      rgba(11, 32, 69, .98),
-      rgba(7, 21, 47, .98)
-    );
-  box-shadow:
-    0 20px 55px rgba(0, 0, 0, .2),
-    inset 0 1px 0 rgba(255, 255, 255, .04);
+  background: var(--surface);
+  box-shadow: var(--shadow);
 }
 
-.schedule-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 10%;
-  width: 80%;
-  height: 2px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--cyan),
-    var(--blue),
-    transparent
-  );
-  opacity: .8;
+.schedule-card {
+  padding: clamp(22px, 5vw, 40px);
 }
-
-.section-heading {
-  max-width: 650px;
-  margin: 0 auto 30px;
-  text-align: center;
-}
-
-.section-heading h2 {
-  margin: 0;
-  color: var(--white);
-  font-size: clamp(1.35rem, 3vw, 1.8rem);
-  line-height: 1.3;
-}
-
-.section-heading p {
-  margin: 12px 0 0;
-  color: var(--muted);
-  font-size: .96rem;
-  line-height: 1.6;
-}
-
 
 /* =========================================================
-   5. FORMULARIO DE BÚSQUEDA
+   ENCABEZADO DEL FORMULARIO
+   ========================================================= */
+
+.section-heading {
+  margin-bottom: 24px;
+}
+
+.section-heading h2,
+.schedule-info h2 {
+  margin-bottom: 7px;
+  color: var(--navy);
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -.02em;
+}
+
+.section-heading p,
+.schedule-info > p {
+  margin-bottom: 0;
+  color: var(--muted);
+}
+
+/* =========================================================
+   FORMULARIO DE BÚSQUEDA
    ========================================================= */
 
 .city-form {
   display: grid;
-  grid-template-columns: .8fr 1.4fr auto;
-  align-items: end;
+  grid-template-columns: minmax(160px, .8fr) minmax(220px, 1.2fr);
   gap: 18px;
+  align-items: end;
 }
 
 .form-field {
   display: flex;
-  flex-direction: column;
-  gap: 9px;
   min-width: 0;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .form-field label {
-  color: var(--white);
+  color: var(--navy);
   font-size: .9rem;
-  font-weight: 700;
+  font-weight: 750;
 }
 
 .form-field input,
 .form-field select {
   width: 100%;
   min-height: 52px;
-  padding: 0 15px;
-  border: 1px solid rgba(189, 204, 224, .22);
+  padding: 0 14px;
+  color: var(--text);
+  background: #fbfdff;
+  border: 1px solid #cbd8e8;
   border-radius: 11px;
   outline: none;
-  background: rgba(7, 21, 47, .8);
-  color: var(--white);
   font: inherit;
-  font-size: .94rem;
   transition:
-    border-color .2s ease,
-    box-shadow .2s ease;
+    border-color .18s ease,
+    box-shadow .18s ease,
+    background .18s ease;
 }
 
-.form-field input::placeholder {
-  color: rgba(189, 204, 224, .58);
+.form-field input:hover,
+.form-field select:hover {
+  border-color: #a9bfd9;
 }
 
 .form-field input:focus,
 .form-field select:focus {
-  border-color: var(--cyan);
-  box-shadow: 0 0 0 3px rgba(39, 217, 242, .12);
+  background: #fff;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 4px rgba(37, 137, 255, .13);
 }
 
-.form-field select option {
-  background: #07152f;
-  color: #f7fbff;
+.form-field input::placeholder {
+  color: #9aa8ba;
 }
 
 .form-field small {
   color: var(--muted);
-  font-size: .78rem;
-  line-height: 1.4;
+  font-size: .76rem;
 }
 
+/* =========================================================
+   BOTÓN CONSULTAR
+   ========================================================= */
+
 .primary-button {
-  min-height: 52px;
-  padding: 0 23px;
-  border: none;
-  border-radius: 11px;
-  background: linear-gradient(110deg, var(--blue), var(--cyan));
-  color: #07152f;
-  font: inherit;
-  font-size: .91rem;
-  font-weight: 800;
+  grid-column: 1 / -1;
+  min-height: 54px;
+  margin-top: 2px;
+  padding: 12px 22px;
+  color: #fff;
+  background: linear-gradient(
+    105deg,
+    var(--blue),
+    #1765d1 62%,
+    #594bd5
+  );
+  border: 0;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(37, 137, 255, .22);
   cursor: pointer;
-  white-space: nowrap;
-  box-shadow: 0 7px 22px rgba(37, 137, 255, .2);
+  font: inherit;
+  font-weight: 800;
   transition:
-    transform .2s ease,
-    box-shadow .2s ease,
-    filter .2s ease;
+    transform .18s ease,
+    box-shadow .18s ease,
+    filter .18s ease;
 }
 
 .primary-button:hover {
-  transform: translateY(-2px);
-  filter: brightness(1.08);
-  box-shadow: 0 10px 28px rgba(39, 217, 242, .2);
+  filter: brightness(1.06);
+  box-shadow: 0 11px 24px rgba(37, 137, 255, .28);
+  transform: translateY(-1px);
 }
 
 .primary-button:active {
@@ -284,51 +333,223 @@
 
 .primary-button:focus-visible {
   outline: 3px solid var(--cyan);
-  outline-offset: 4px;
+  outline-offset: 3px;
 }
 
-
 /* =========================================================
-   6. MENSAJES DEL FORMULARIO
+   MENSAJES DEL FORMULARIO
    ========================================================= */
 
 .form-message {
-  min-height: 20px;
-  margin: 15px 0 0;
-  color: var(--cyan);
-  font-size: .88rem;
-  line-height: 1.5;
-  text-align: center;
+  min-height: 1.4em;
+  margin: 12px 0 0;
+  color: #b42318;
+  font-size: .9rem;
 }
 
-
 /* =========================================================
-   7. RESULTADO DE LA CONSULTA
+   RESULTADO DEL HORARIO
    ========================================================= */
 
 .schedule-result {
-  margin-top: 28px;
-  padding: 30px;
-  border: 1px solid rgba(39, 217, 242, .22);
-  border-radius: 18px;
-  background:
-    radial-gradient(
-      circle at 50% 0%,
-      rgba(39, 217, 242, .09),
-      transparent 55%
-    ),
-    rgba(7, 21, 47, .68);
-  animation: result-appear .35s ease both;
+  margin-top: 12px;
+  padding: 24px;
+  border: 1px solid rgba(39, 217, 242, .36);
+  border-radius: 17px;
+  background: linear-gradient(
+    135deg,
+    #f0fcff,
+    #f7f8ff 72%,
+    #fff7fd
+  );
+  animation: result-in .3s ease both;
 }
 
 .schedule-result[hidden] {
   display: none;
 }
 
-@keyframes result-appear {
+.result-kicker {
+  margin-bottom: 4px;
+  color: #087f9b;
+  font-size: .7rem;
+  font-weight: 850;
+  letter-spacing: .13em;
+}
+
+.schedule-result h2 {
+  margin-bottom: 18px;
+  color: var(--navy);
+  font-size: 1.35rem;
+}
+
+/* =========================================================
+   PANEL DESTACADO DE HORA LOCAL
+   ========================================================= */
+
+.local-time-panel {
+  padding: 22px 18px;
+  color: #fff;
+  text-align: center;
+  background: linear-gradient(
+    120deg,
+    var(--navy),
+    #123b70 70%,
+    #164f78
+  );
+  border: 1px solid rgba(39, 217, 242, .18);
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(7, 21, 47, .13);
+}
+
+.time-label {
+  display: block;
+  color: rgba(255, 255, 255, .78);
+  font-size: .85rem;
+}
+
+.time-value {
+  margin: 3px 0 0;
+  color: var(--cyan);
+  font-size: clamp(2.3rem, 8vw, 3.4rem);
+  font-weight: 850;
+  line-height: 1.2;
+  letter-spacing: -.04em;
+}
+
+.class-days {
+  margin: 7px 0 0;
+  color: #fff;
+  font-size: .9rem;
+}
+
+/* =========================================================
+   NOTA INFORMATIVA DE ARGENTINA
+   Adaptada al panel informativo del HTML actual.
+   ========================================================= */
+
+.argentina-time-panel {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  margin-top: 14px;
+  padding: 16px 18px;
+  color: var(--text);
+  background: #f2f7ff;
+  border: 1px solid #dce9fb;
+  border-left: 4px solid var(--cyan);
+  border-radius: 13px;
+}
+
+.argentina-time-panel .time-label {
+  color: var(--navy);
+  font-size: .95rem;
+  font-weight: 800;
+}
+
+.argentina-time-panel strong {
+  color: var(--navy);
+  font-size: 1rem;
+}
+
+.argentina-time-panel p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: .86rem;
+  line-height: 1.55;
+}
+
+/* Si el HTML incluye un icono informativo. */
+
+.argentina-time-panel .info-icon {
+  display: flex;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  align-items: center;
+  justify-content: center;
+  color: #087f9b;
+  background: rgba(39, 217, 242, .16);
+  border-radius: 50%;
+  font-weight: 800;
+}
+
+/* =========================================================
+   FECHA Y DETALLES DEL RESULTADO
+   ========================================================= */
+
+.date-note {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: .82rem;
+  line-height: 1.55;
+}
+
+/* =========================================================
+   INFORMACIÓN SOBRE LAS CLASES
+   ========================================================= */
+
+.schedule-info {
+  margin-top: 22px;
+  padding: 26px clamp(22px, 5vw, 34px);
+  box-shadow: 0 8px 28px rgba(7, 21, 47, .055);
+}
+
+.schedule-info h2 {
+  margin-bottom: 8px;
+}
+
+.base-schedule {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin: 18px 0 12px;
+  padding: 14px 16px;
+  background: #f2f7ff;
+  border: 1px solid #dce9fb;
+  border-radius: 12px;
+}
+
+.base-schedule span {
+  color: var(--muted);
+  font-size: .9rem;
+}
+
+.base-schedule strong {
+  color: var(--blue);
+  font-size: 1.15rem;
+}
+
+.schedule-info .timezone-note {
+  font-size: .83rem;
+  line-height: 1.55;
+}
+
+/* =========================================================
+   PIE DE PÁGINA
+   ========================================================= */
+
+.site-footer {
+  padding: 22px 18px;
+  color: rgba(255, 255, 255, .72);
+  background: var(--navy);
+  text-align: center;
+  font-size: .78rem;
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+/* =========================================================
+   ANIMACIÓN DEL RESULTADO
+   ========================================================= */
+
+@keyframes result-in {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(8px);
   }
 
   to {
@@ -337,207 +558,59 @@
   }
 }
 
-.result-kicker {
-  margin: 0 0 8px;
-  color: var(--cyan);
-  font-size: .75rem;
-  font-weight: 800;
-  letter-spacing: 1.8px;
-  text-align: center;
-}
-
-.schedule-result > h2 {
-  margin: 0 0 25px;
-  color: var(--white);
-  font-size: 1.55rem;
-  text-align: center;
-}
-
-
-/* Horario local */
-
-.local-time-panel {
-  padding: 28px 20px;
-  border: 1px solid rgba(39, 217, 242, .25);
-  border-radius: 15px;
-  background: linear-gradient(
-    130deg,
-    rgba(37, 137, 255, .13),
-    rgba(39, 217, 242, .07)
-  );
-  text-align: center;
-}
-
-.time-label {
-  display: block;
-  color: var(--muted);
-  font-size: .9rem;
-  font-weight: 600;
-}
-
-.time-value {
-  margin: 12px 0 5px;
-  color: var(--white);
-  font-size: clamp(2.7rem, 7vw, 4.2rem);
-  font-weight: 800;
-  line-height: 1.15;
-  letter-spacing: -1.5px;
-  font-variant-numeric: tabular-nums;
-}
-
-.class-days {
-  margin: 10px 0 0;
-  color: var(--cyan);
-  font-size: .92rem;
-  font-weight: 700;
-}
-
-
-/* Horario de Argentina */
-
-.argentina-time-panel {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 15px;
-  margin-top: 14px;
-  padding: 17px 20px;
-  border: 1px solid rgba(189, 204, 224, .13);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, .035);
-}
-
-.argentina-time-panel .time-label {
-  font-size: .86rem;
-}
-
-.argentina-time-panel strong {
-  color: var(--white);
-  font-size: 1.1rem;
-  white-space: nowrap;
-}
-
-.date-note {
-  margin: 18px 0 0;
-  color: var(--muted);
-  font-size: .83rem;
-  line-height: 1.6;
-  text-align: center;
-}
-
-
 /* =========================================================
-   8. INFORMACIÓN SOBRE LOS HORARIOS
+   TABLET Y PANTALLAS MEDIANAS
    ========================================================= */
 
-.schedule-info {
-  max-width: 720px;
-  margin: 48px auto 0;
-  padding: 30px;
-  border: 1px solid rgba(189, 204, 224, .13);
-  border-radius: 17px;
-  background: rgba(11, 32, 69, .48);
-  text-align: center;
+@media (min-width: 720px) {
+  .city-form {
+    grid-template-columns:
+      minmax(190px, .75fr)
+      minmax(260px, 1.25fr)
+      auto;
+  }
+
+  .primary-button {
+    grid-column: auto;
+    min-width: 180px;
+  }
 }
 
-.schedule-info h2 {
-  margin: 0 0 12px;
-  color: var(--white);
-  font-size: 1.4rem;
-}
-
-.schedule-info > p {
-  color: var(--muted);
-  font-size: .94rem;
-  line-height: 1.7;
-}
-
-.base-schedule {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin: 12px 0;
-  padding: 13px 20px;
-  border: 1px solid rgba(39, 217, 242, .2);
-  border-radius: 10px;
-  background: rgba(39, 217, 242, .06);
-}
-
-.base-schedule span {
-  color: var(--muted);
-  font-size: .88rem;
-}
-
-.base-schedule strong {
-  color: var(--cyan);
-  font-size: 1.05rem;
-}
-
-.schedule-info .timezone-note {
-  max-width: 580px;
-  margin: 15px auto 0;
-  font-size: .83rem;
-}
-
-
-/* =========================================================
-   9. PIE DE PÁGINA
-   ========================================================= */
-
-.site-footer {
-  padding: 22px 20px;
-  border-top: 1px solid rgba(189, 204, 224, .1);
-  text-align: center;
-}
-
-.site-footer p {
-  margin: 0;
-  color: var(--muted);
-  font-size: .82rem;
-  line-height: 1.6;
-}
-
-
-/* =========================================================
-   10. TABLETS
-   ========================================================= */
-
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
   .topbar .nav {
     flex-wrap: wrap;
     padding: 12px 0;
   }
 
   .topbar .nav-links {
+    gap: 15px;
+  }
+}
+
+/* =========================================================
+   MÓVILES
+   ========================================================= */
+
+@media (max-width: 800px) {
+  .topbar .nav-links {
     order: 3;
     width: 100%;
     overflow-x: auto;
-    gap: 18px;
-    padding: 5px 0;
+    justify-content: flex-start;
+    padding: 7px 0;
+    scrollbar-width: thin;
   }
 
   .topbar .nav-links a {
     white-space: nowrap;
   }
-
-  .city-form {
-    grid-template-columns: 1fr 1.4fr;
-  }
-
-  .primary-button {
-    grid-column: 1 / -1;
-    width: 100%;
-  }
 }
 
+@media (max-width: 560px) {
+  .topbar .container {
+    width: calc(100% - 28px);
+  }
 
-/* =========================================================
-   11. CELULARES
-   ========================================================= */
-
-@media (max-width: 600px) {
   .topbar .nav {
     gap: 12px;
   }
@@ -552,182 +625,73 @@
   }
 
   .topbar > .container > .btn {
-    padding: 10px 12px;
-    font-size: .8rem;
-  }
-
-  .topbar .nav-links {
-    gap: 17px;
-  }
-
-  .topbar .nav-links a {
-    font-size: .84rem;
+    padding: 10px 13px;
+    font-size: .82rem;
   }
 
   .page-container {
-    width: calc(100% - 28px);
-    padding: 43px 0 55px;
+    width: min(100% - 26px, 900px);
+    padding: 42px 0 38px;
   }
 
   .intro {
-    margin-bottom: 30px;
-  }
-
-  .intro h1 {
-    font-size: 2.1rem;
-  }
-
-  .intro-text {
-    font-size: .94rem;
-    line-height: 1.7;
-  }
-
-  .schedule-card {
-    padding: 25px 18px;
-    border-radius: 17px;
-  }
-
-  .section-heading {
     margin-bottom: 24px;
   }
 
-  .section-heading h2 {
-    font-size: 1.35rem;
+  .intro h1 {
+    font-size: clamp(1.8rem, 8vw, 2.4rem);
+  }
+
+  .intro-text {
+    font-size: .95rem;
+  }
+
+  .schedule-card {
+    padding: 20px 17px;
+    border-radius: 18px;
   }
 
   .city-form {
     grid-template-columns: 1fr;
-    gap: 17px;
+    gap: 14px;
   }
 
   .primary-button {
     grid-column: auto;
+    width: 100%;
   }
 
   .schedule-result {
-    padding: 22px 15px;
-  }
-
-  .schedule-result > h2 {
-    font-size: 1.3rem;
-  }
-
-  .local-time-panel {
-    padding: 25px 12px;
+    padding: 18px;
   }
 
   .time-value {
-    font-size: clamp(2.2rem, 11vw, 3.2rem);
-    letter-spacing: -1px;
+    font-size: clamp(2.1rem, 10vw, 3rem);
   }
 
-  .argentina-time-panel {
+  .argentina-time-panel,
+  .base-schedule {
+    align-items: flex-start;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 7px;
+    gap: 5px;
   }
 
   .schedule-info {
-    margin-top: 30px;
-    padding: 24px 18px;
-  }
-
-  .schedule-info h2 {
-    font-size: 1.25rem;
+    padding: 22px 18px;
   }
 }
-
 
 /* =========================================================
-   12. CELULARES PEQUEÑOS
+   ACCESIBILIDAD
    ========================================================= */
 
-@media (max-width: 380px) {
-  .topbar .brand span {
-    font-size: .85rem;
-  }
-
-  .topbar > .container > .btn {
-    padding: 9px 10px;
-    font-size: .74rem;
-  }
-
-  .intro h1 {
-    font-size: 1.8rem;
-  }
-
-  .schedule-card {
-    padding: 22px 14px;
-  }
-
-  .time-value {
-    font-size: 2.15rem;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
   }
 }
-
-
-.argentina-time-panel {
-  display: flex;
-  align-items: flex-start;
-  gap: 15px;
-  margin-top: 16px;
-  padding: 20px;
-  border: 1px solid rgba(39, 217, 242, .12);
-  border-radius: 14px;
-  background: rgba(39, 137, 255, .045);
-}
-
-.schedule-note-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: rgba(39, 217, 242, .1);
-  color: var(--cyan);
-  font-size: 1.1rem;
-  font-weight: 700;
-}
-
-.schedule-note-content {
-  min-width: 0;
-}
-
-.schedule-note-content strong {
-  display: block;
-  margin-bottom: 8px;
-  color: var(--white);
-  font-size: .92rem;
-}
-
-.schedule-note-content p {
-  margin: 0;
-  color: var(--muted);
-  font-size: .84rem;
-  line-height: 1.7;
-}
-
-.schedule-note-content p + p {
-  margin-top: 10px;
-}
-
-.schedule-note-content a {
-  color: var(--cyan);
-  text-decoration: none;
-  overflow-wrap: anywhere;
-}
-
-.schedule-note-content a:hover {
-  text-decoration: underline;
-}
-
-@media (max-width: 600px) {
-  .argentina-time-panel {
-    padding: 16px;
-    gap: 11px;
-  }
-}
-
